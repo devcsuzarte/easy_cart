@@ -1,10 +1,10 @@
-import 'package:easy_cart/constants.dart';
-import 'package:easy_cart/widgets/cart_screen_widgets/products_list.dart';
+import 'package:easy_cart/core/constants.dart';
+import 'package:easy_cart/ui/widgets/products_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:easy_cart/controller/product_data_manager.dart';
 import 'package:provider/provider.dart';
-import 'package:easy_cart/widgets/cart_screen_widgets/cart_appbar.dart';
+import 'package:easy_cart/ui/widgets/cart_appbar.dart';
 import 'package:easy_cart/controller/scan_manager.dart';
 
 class CartScreen extends StatefulWidget {

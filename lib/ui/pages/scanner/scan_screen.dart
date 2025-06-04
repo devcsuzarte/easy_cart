@@ -1,17 +1,17 @@
 import 'dart:ui';
-import 'package:easy_cart/constants.dart';
+import 'package:easy_cart/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:easy_cart/controller/text_manager.dart';
-import 'package:easy_cart/models/product.dart';
+import 'package:easy_cart/data/models/product.dart';
 import 'package:easy_cart/controller/product_data_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_cart/controller/scan_manager.dart';
-import 'package:easy_cart/widgets/scan_screen_widgets/price_label.dart';
-import 'package:easy_cart/widgets/scan_screen_widgets/amount_stepper.dart';
-import 'package:easy_cart/widgets/scan_screen_widgets/product_label.dart';
+import 'package:easy_cart/ui/widgets/price_label.dart';
+import 'package:easy_cart/ui/widgets/amount_stepper.dart';
+import 'package:easy_cart/ui/widgets/product_label.dart';
 
 class ScanScreen extends StatefulWidget {
 
@@ -24,7 +24,7 @@ class ScanScreen extends StatefulWidget {
 }
 
 class _ScanScreenState extends State<ScanScreen> {
-  final textManager = TextManager();
+  final textManager = TextUtils();
   final scanManager = ScanManager();
   final textLabelController = TextEditingController();
   final textPriceController = TextEditingController();

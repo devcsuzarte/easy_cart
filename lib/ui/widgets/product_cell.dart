@@ -1,4 +1,4 @@
-import 'package:easy_cart/constants.dart';
+import 'package:easy_cart/core/constants.dart';
 import 'package:flutter/material.dart';
 
 class ProductCell extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:easy_cart/constants.dart';
+import 'package:easy_cart/core/constants.dart';
 
 class ProductLabel extends StatelessWidget {
   const ProductLabel({

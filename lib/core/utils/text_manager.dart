@@ -1,8 +1,8 @@
 import 'dart:ffi';
-import 'package:easy_cart/widgets/cart_screen_widgets/product_cell.dart';
+import 'package:easy_cart/ui/widgets/product_cell.dart';
 import 'package:flutter/cupertino.dart';
 
-class TextManager {
+class TextUtils {
   final List<String> possibleLables = [];
   final List<String> possiblePrices = [];
 

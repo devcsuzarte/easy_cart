@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:easy_cart/controller/text_manager.dart';
-import 'package:easy_cart/screens/scan_screen.dart';
+import 'package:easy_cart/ui/pages/scanner/scan_screen.dart';
 
 class ScanManager extends ChangeNotifier {
 
@@ -15,7 +15,7 @@ ScanManager({this.context});
   final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
 
   void processScan(XFile labelImage) async{
-    final textManager = TextManager();
+    final textManager = TextUtils();
     final inputImage = InputImage.fromFile(File(labelImage.path));
     final RecognizedText recognizedText = await textRecognizer.processImage(inputImage);
     await textRecognizer.close();

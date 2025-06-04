@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'screens/cart_screen.dart';
+import 'ui/pages/cart/cart_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_cart/controller/product_data_manager.dart';
 

@@ -1,8 +1,8 @@
 import 'dart:collection';
 import 'dart:ffi';
 import 'package:flutter/widgets.dart';
-import 'package:easy_cart/database.dart';
-import '../models/product.dart';
+import 'package:easy_cart/core/database.dart';
+import '../data/models/product.dart';
 
 class ProductData extends ChangeNotifier{
 

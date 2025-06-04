@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:easy_cart/controller/product_data_manager.dart';
 import 'package:provider/provider.dart';
-import 'package:easy_cart/constants.dart';
-import 'package:easy_cart/widgets/cart_screen_widgets/delete_alert_dialog.dart';
+import 'package:easy_cart/core/constants.dart';
+import 'package:easy_cart/ui/widgets/delete_alert_dialog.dart';
 import 'dart:io' show Platform;
 
 

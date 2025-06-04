@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import 'models/product.dart';
+import '../data/models/product.dart';
 import 'package:path/path.dart';
 
 class EZCartDB {

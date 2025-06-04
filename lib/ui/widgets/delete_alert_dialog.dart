@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../controller/product_data_manager.dart';
-import 'package:easy_cart/constants.dart';
+import 'package:easy_cart/core/constants.dart';
 
 
 void cupertinoDialog(BuildContext context) {
