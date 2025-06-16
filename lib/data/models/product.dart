@@ -2,8 +2,8 @@ class Product {
 
   int? id;
   int? amount;
-  String? labelTitle;
-  String? labelPrice;
+  String? title;
+  String? price;
 
-  Product({this.amount, this.labelPrice, this.labelTitle, this.id});
+  Product({this.amount, this.price, this.title, this.id});
 }

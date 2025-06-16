@@ -1,48 +1,64 @@
-import 'dart:collection';
-import 'dart:ffi';
-import 'package:flutter/widgets.dart';
-import 'package:easy_cart/core/database.dart';
-import '../data/models/product.dart';
+import 'package:easy_cart/core/scan_manager.dart';
+import 'package:easy_cart/data/models/product.dart';
+import 'package:easy_cart/utils/price.dart';
 
-class ProductData extends ChangeNotifier{
-
-  List<Product> _productsList = [];
-  double totalCartPrice = 0.0;
-
-  UnmodifiableListView<Product> get products {
-    return UnmodifiableListView(_productsList);
-  }
+import 'package:easy_cart/core/database_manager.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:stacked/stacked.dart';
 
 
-  void addProduct(Product product) {
-    _productsList.add(product);
-    var price = product.labelPrice!.replaceAll(',', '.');
-    EZCartDB().create(title: product.labelTitle!, price: double.parse(price), amount: product.amount!);
-    showData();
-  }
+class CartViewModel extends FutureViewModel{
 
-  void showData() async{
-    _productsList = await EZCartDB().fetchAll;
-    setTotalCartPrice();
-    notifyListeners();
-  }
+	late DatabaseManager databaseManager;
+	late ScanManager scanManager;
+	final imagePicker = ImagePicker();
 
-  void deleteProduct(int productID) {
-    EZCartDB().delete(id: productID);
-    showData();
-  }
+	ReactiveValue<List<Product>> productsList = ReactiveValue(List.empty());
+	ReactiveValue<double> total = ReactiveValue(0.0);
+	
 
-  void cleanCartList() {
-    EZCartDB().deleteTable();
-    showData();
-  }
+	CartViewModel({
+		required this.databaseManager
+	});
 
+	@override
+	 Future futureToRun() async {
+		await getData();
 
-  void setTotalCartPrice() {
-    var total = 0.0;
-    for (Product product in _productsList) {
-      total = total + (double.parse(product.labelPrice!) * product.amount!);
-    }
-    totalCartPrice = total;
-  }
+	}
+
+	Future<void> addProduct(Product product) async {
+		productsList.value.add(product);
+		var price = product.price!.replaceAll(',', '.');
+
+		runBusyFuture(databaseManager.create(
+			title: product.title!, 
+			price: double.parse(price), 
+			amount: product.amount!
+			)
+		);
+		
+		await getData();
+	}
+
+	Future<void> getData() async {
+		productsList.value = await databaseManager.fetchAll;
+		setTotalCartPrice();
+		notifyListeners();
+	}
+
+	void deleteProduct(int productID) async {
+		databaseManager.delete(productID);
+		await getData();
+	}
+
+	void cleanCartList() async {
+		databaseManager.deleteTable();
+		await getData();
+	}
+
+	void setTotalCartPrice() {
+		total.value = PriceUtils.getTotalPrice(productsList.value);
+		notifyListeners();
+	}
 }

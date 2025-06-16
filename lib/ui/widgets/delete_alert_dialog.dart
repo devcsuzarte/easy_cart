@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../controller/product_data_manager.dart';
+import '../pages/cart/cart_viewmodel.dart';
 import 'package:easy_cart/core/constants.dart';
 
 
@@ -16,7 +16,7 @@ void cupertinoDialog(BuildContext context) {
           isDestructiveAction: true,
           child: kDialogActionDefaultText,
           onPressed: () {
-            Provider.of<ProductData>(context, listen: false).cleanCartList();
+            //Provider.of<CartViewModel>(context, listen: false).cleanCartList();
             Navigator.pop(context);
           },
         ),
@@ -46,7 +46,6 @@ void cupertinoDialog(BuildContext context) {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Provider.of<ProductData>(context, listen: false).cleanCartList();
                 Navigator.pop(context);
               },
                 child: kDialogActionDefaultText,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:easy_cart/controller/product_data_manager.dart';
+import 'package:easy_cart/ui/pages/cart/cart_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_cart/core/constants.dart';
 import 'package:easy_cart/ui/widgets/delete_alert_dialog.dart';
@@ -44,7 +44,7 @@ class CartAppbar extends StatelessWidget {
                         kCartIcon,
                         const SizedBox(width: 10,),
                         Text(
-                          'R\$${Provider.of<ProductData>(context, listen: true).totalCartPrice.toStringAsFixed(2)}',
+                          '',
                           style: kTitleTextStyle,
                         ),
                       ],
