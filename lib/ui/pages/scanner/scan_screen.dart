@@ -46,16 +46,132 @@ class _ScanScreenState extends State<ScanScreen> {
 				(list) => priceList = list.neu
 			)
 			..label.onChange.listen(
-				(event) => label = event.neu
+				(event) {
+					label = event.neu;
+					textLabelController.text = label;
+				} 
 			)
 			..price.onChange.listen(
-				(event) => price = event.neu
+				(event) {
+					price = event.neu;
+					textPriceController.text = price;
+				} 
 			);
 		},
-		builder: (context, model, child) => Padding(
-			padding: const EdgeInsets.symmetric(horizontal: 20.0),
-			child: Text('Valor: $label')
-			),
-		);
+		builder: (context, model, child) => Column(
+			crossAxisAlignment: CrossAxisAlignment.center,
+			children: [
+				Row(
+					mainAxisAlignment: MainAxisAlignment.center,
+					children: [
+						SizedBox(
+							width: MediaQuery.of(context).size.width * 0.8,
+							child: TextField(
+								controller: textLabelController,
+								textAlign: TextAlign.center,
+								style: TextStyle(
+									fontSize: 24
+								),
+								decoration: InputDecoration(
+									hintText: 'TITULO DO PRODUTO',
+									border: InputBorder.none,
+									suffixIcon: IconButton(
+										onPressed: () {}, 
+										icon: Icon(
+											Icons.refresh,
+											color: Colors.black
+										)
+									)
+								)
+							)
+						)
+					]
+				),
+				const SizedBox(height: 5),
+				Row(
+					mainAxisAlignment: MainAxisAlignment.center,
+					crossAxisAlignment: CrossAxisAlignment.center,
+					children: [
+						SizedBox(
+							width: MediaQuery.of(context).size.width * 0.3,
+							child: TextField(
+								controller: textPriceController,
+								textAlign: TextAlign.center,
+								textAlignVertical: TextAlignVertical.center,
+								style: TextStyle(
+									fontSize: 16
+								),
+								decoration: InputDecoration(
+									hintText: 'RS770,00',
+									border: InputBorder.none,
+									suffixIcon: IconButton(
+										onPressed: () {}, 
+										icon: Icon(
+											Icons.refresh,
+											color: Colors.black
+										)
+									)
+								)
+							)
+						)
+					]
+				),
+				Row(
+					mainAxisAlignment: MainAxisAlignment.center,
+					children: [
+						IconButton(
+							onPressed: (){}, 
+							icon: IconButton(
+								onPressed: () {}, 
+								icon: Icon(
+									Icons.add,
+									color: Colors.black
+								)
+							)
+						),
+						Text(
+							'1x',
+							style: TextStyle(
+								fontSize: 30
+							),
+						),
+						IconButton(
+							onPressed: (){}, 
+							icon: IconButton(
+								onPressed: () {}, 
+								icon: Icon(
+									Icons.add,
+									color: Colors.black
+								)
+							)
+						)
+					]
+				),
+				Row(
+					children: [
+						Text(
+							price,
+							style: TextStyle(
+								fontSize: 30
+							),
+						),
+						SizedBox(width: 8),
+						TextButton.icon(
+							style: TextButton.styleFrom(
+								backgroundColor: Colors.green,
+								foregroundColor: Colors.white
+							),
+							onPressed: (){}, 
+							icon: Icon(
+								Icons.shopping_cart
+							),
+							label: Text(
+								'Add item'
+							)
+						)
+					]
+				)
+			]
+		));
 	}
 }

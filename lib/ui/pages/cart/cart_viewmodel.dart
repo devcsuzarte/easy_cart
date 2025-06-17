@@ -16,7 +16,6 @@ class CartViewModel extends FutureViewModel{
 	ReactiveValue<List<Product>> productsList = ReactiveValue(List.empty());
 	ReactiveValue<double> total = ReactiveValue(0.0);
 	
-
 	CartViewModel({
 		required this.databaseManager
 	});
@@ -24,7 +23,6 @@ class CartViewModel extends FutureViewModel{
 	@override
 	 Future futureToRun() async {
 		await getData();
-
 	}
 
 	Future<void> addProduct(Product product) async {

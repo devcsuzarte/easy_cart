@@ -38,7 +38,9 @@ class _CartScreenState extends State<CartScreen> {
 				floatingActionButton: FloatingActionButton(
 					onPressed: () {
 						showModalBottomSheet(
-							context: context, 
+							context: context,
+							showDragHandle: true,
+							backgroundColor: Colors.white,
 							builder: (context) => ScanScreen()
 						);
 					},
