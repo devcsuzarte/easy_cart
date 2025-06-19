@@ -22,7 +22,12 @@ class _ScanScreenState extends State<ScanScreen> {
 
 	final TextEditingController textLabelController = TextEditingController();
 	final TextEditingController textPriceController = TextEditingController();
-	final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter.currency();
+	final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter.currency(
+		locale: 'pt-br',
+		decimalDigits: 2,
+		symbol: 'R\$',
+		inputDirection: InputDirection.left
+	);
 
 	String label = ''; 
 	String price = '0,00'; 
@@ -46,138 +51,181 @@ class _ScanScreenState extends State<ScanScreen> {
 			..price.onChange.listen(
 				(event) {
 					price = event.neu;
-				//	textPriceController.text = price;
+					
+					textPriceController.text = _formatter.formatString(price);
 				} 
 			);
 		},
-		builder: (context, model, child) => Column(
-			crossAxisAlignment: CrossAxisAlignment.center,
-			children: [
-				Row(
-					mainAxisAlignment: MainAxisAlignment.center,
+		builder: (context, model, child) => Padding(
+				  padding: const EdgeInsets.all(14.0),
+				  child: Column(
+					crossAxisAlignment: CrossAxisAlignment.start,
+					mainAxisAlignment: MainAxisAlignment.start,
 					children: [
-						SizedBox(
-							width: MediaQuery.of(context).size.width * 0.8,
-							child: TextField(
+						Flexible(
+							child: TextFormField(
 								controller: textLabelController,
-								textAlign: TextAlign.center,
+								textAlign: TextAlign.start,
+								maxLines: 2,
+								minLines: 1,
 								style: TextStyle(
-									fontSize: 24
+									fontSize: 24,
+									fontWeight: FontWeight.bold
 								),
 								decoration: InputDecoration(
 									hintText: 'TITULO DO PRODUTO',
-									border: InputBorder.none,
-									suffixIcon: IconButton(
-										onPressed: () {
-											model.refreshLabel();
-										}, 
-										icon: Icon(
-											Icons.refresh,
-											color: Colors.black
-										)
-									)
+									border: InputBorder.none
 								)
 							)
-						)
-					]
-				),
-				const SizedBox(height: 5),
-				Row(
-					mainAxisAlignment: MainAxisAlignment.center,
-					crossAxisAlignment: CrossAxisAlignment.center,
-					children: [
-						SizedBox(
-							width: MediaQuery.of(context).size.width * 0.3,
-							child: TextFormField(
-								controller: textPriceController,
-								textAlign: TextAlign.center,
-								textAlignVertical: TextAlignVertical.center,
-								initialValue: _formatter.formatString('2000'),
-								inputFormatters: <TextInputFormatter>[
-									CurrencyTextInputFormatter.currency(
-										locale: 'ko',
-										decimalDigits: 0,
-										symbol: 'R\$ ',
+						),
+						const SizedBox(height: 5),
+						Row(
+							mainAxisAlignment: MainAxisAlignment.spaceBetween,
+						  children: [
+							Row(
+								mainAxisAlignment: MainAxisAlignment.center,
+								children: [
+									InkWell(
+										onTap: (){},
+										child: Container(
+											padding: const EdgeInsets.all(8),
+											decoration: BoxDecoration(
+												color: Color(0xFFF0F2F5),
+												shape: BoxShape.circle
+											),
+											child: Icon(
+												Icons.remove,
+												color: Colors.black,
+												size: 30,
+											),
+										)
 									),
-								],
-           					 	keyboardType: TextInputType.number,
-								style: TextStyle(
-									fontSize: 16
-								),
-								decoration: InputDecoration(
-									hintText: 'RS770,00',
-									border: InputBorder.none,
-									suffixIcon: IconButton(
-										onPressed: () {
-											model.refreshPrice();
-										}, 
-										icon: Icon(
-											Icons.refresh,
-											color: Colors.black
+									const SizedBox(width: 18),
+									Text(
+										'1x',
+										style: TextStyle(
+											fontSize: 30,
+											fontWeight: FontWeight.bold
+										),
+									),
+									const SizedBox(width: 18),
+									InkWell(
+										onTap: (){},
+										child: Container(
+											padding: const EdgeInsets.all(8),
+											decoration: BoxDecoration(
+												color: Color(0xFFF0F2F5),
+												shape: BoxShape.circle
+											),
+											child: Icon(
+												Icons.add,
+												color: Colors.black,
+												size: 30,
+											),
 										)
 									)
-								)
-							)
-						)
-					]
-				),
-				Row(
-					mainAxisAlignment: MainAxisAlignment.center,
-					children: [
-						IconButton(
-							onPressed: (){}, 
-							icon: IconButton(
-								onPressed: () {}, 
-								icon: Icon(
-									Icons.add,
-									color: Colors.black
-								)
-							)
+								]
+							),
+						    Flexible(
+						    	child: TextFormField(
+						    		controller: textPriceController,
+						    		textAlign: TextAlign.end,
+						    		textAlignVertical: TextAlignVertical.center,
+						    		inputFormatters: <TextInputFormatter>[
+						    			CurrencyTextInputFormatter.currency(
+						    				locale: 'br',
+						    				decimalDigits: 2,
+						    				symbol: 'R\$ ',
+						    			),
+						    		],
+						    		keyboardType: TextInputType.number,
+						    		style: TextStyle(
+										fontSize: 28,
+										fontWeight: FontWeight.bold
+									),
+						    		decoration: InputDecoration(
+						    			hintText: 'Preço',
+						    			border: InputBorder.none
+						    		)
+						    	)
+						    ),
+						  ],
 						),
-						Text(
-							'1x',
-							style: TextStyle(
-								fontSize: 30
+						
+						Padding(
+							padding: const EdgeInsets.symmetric(vertical: 24),
+							child: Divider(
+								color: Colors.grey.shade200,
 							),
 						),
-						IconButton(
-							onPressed: (){}, 
-							icon: IconButton(
-								onPressed: () {}, 
-								icon: Icon(
-									Icons.add,
-									color: Colors.black
-								)
-							)
-						)
-					]
-				),
-				Row(
-					children: [
-						Text(
-							FormatUtils.getDisplayPrice(price),
-							style: TextStyle(
-								fontSize: 30
+
+						Row(
+							mainAxisAlignment: MainAxisAlignment.start,
+						  children: [
+							Column(
+								crossAxisAlignment: CrossAxisAlignment.start,
+							  children: [
+								TextButton(
+									onPressed: () {
+										model.refreshLabel();
+									}, 
+									child: Text(
+										'Atualizar etiqueta',
+										style: TextStyle(
+											color: Colors.blue,
+											fontWeight: FontWeight.bold
+										)
+									)
+								),
+								TextButton(
+									onPressed: () {
+										model.refreshPrice();
+									}, 
+									child: Text(
+										'Atualizar preço',
+										style: TextStyle(
+											color: Colors.blue,
+											fontWeight: FontWeight.bold
+										)
+									)
+								),
+							  ],
 							),
+						  ],
 						),
-						SizedBox(width: 8),
-						TextButton.icon(
+						const SizedBox(height: 24.0),
+						TextButton(
 							style: TextButton.styleFrom(
 								backgroundColor: Colors.green,
 								foregroundColor: Colors.white
 							),
 							onPressed: (){
 							}, 
-							icon: Icon(
-								Icons.shopping_cart
+							child: Padding(
+								padding: const EdgeInsets.all(8.0),
+								child: Row(
+									mainAxisAlignment: MainAxisAlignment.spaceBetween,
+									children: [
+										Text(
+											'Adicionar ($amount)',
+											style: TextStyle(
+												fontSize: 16,
+												fontWeight: FontWeight.bold
+											),
+										),
+										Text(
+											_formatter.formatString(price),
+											style: TextStyle(
+												fontSize: 16,
+												fontWeight: FontWeight.bold
+											),
+										)
+									]
+								),
 							),
-							label: Text(
-								'Add item'
-							)
 						)
 					]
-				)
-			]
-		));
+				  ),
+				));
 	}
 }
