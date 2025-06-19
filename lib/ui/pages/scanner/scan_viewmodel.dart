@@ -7,10 +7,12 @@ class ScanViewmodel extends FutureViewModel {
 	late ScanManager scanManager;
 	final imagePicker = ImagePicker();
 
-	ReactiveValue<String> label = ReactiveValue(''); 
-	ReactiveValue<String> price = ReactiveValue('0,00'); 
-	ReactiveValue<List<String>> labelsList = ReactiveValue(List.empty());
-	ReactiveValue<List<String>> pricesList = ReactiveValue(List.empty());
+	ReactiveValue<String> label = ReactiveValue(''), 
+		price = ReactiveValue('0,00'); 
+	ReactiveValue<List<String>> labelsList = ReactiveValue(List.empty()), 
+		pricesList = ReactiveValue(List.empty());
+	ReactiveValue<int> labelSelected = ReactiveValue(0), 
+		priceSelected = ReactiveValue(0); 
 
 	ScanViewmodel({
 		required this.scanManager
@@ -28,13 +30,32 @@ class ScanViewmodel extends FutureViewModel {
 
 			labelsList.value = scanManager.getLabels();
 			pricesList.value = scanManager.getPrices();
-		
-			label.value = labelsList.value.isNotEmpty ? labelsList.value.first : '';
-			price.value = pricesList.value.isNotEmpty ? pricesList.value.first : '0,00';
 
-			notifyListeners();
+			setLabel();
+			setPrice();
+		
 		} catch (e) {
 			throw('SOMETHING WENT WRONG: $e');
 		}
+	}
+
+	void setLabel(){
+		label.value = labelsList.value.isNotEmpty ? labelsList.value.first : '';
+		notifyListeners();
+	}
+
+	void setPrice(){
+		price.value = pricesList.value.isNotEmpty ? pricesList.value.first : '0,00';
+		notifyListeners();
+	}
+
+	void refreshLabel() {
+		labelsList.value.shuffle();
+		setLabel();
+	} 
+		
+	void refreshPrice() { 
+		pricesList.value.shuffle();
+		setPrice();
 	}
 }

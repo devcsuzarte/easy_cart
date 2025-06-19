@@ -1,6 +1,9 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:easy_cart/ui/pages/scanner/scan_viewmodel.dart';
+import 'package:easy_cart/utils/format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 import 'package:easy_cart/core/scan_manager.dart';
@@ -19,16 +22,11 @@ class _ScanScreenState extends State<ScanScreen> {
 
 	final TextEditingController textLabelController = TextEditingController();
 	final TextEditingController textPriceController = TextEditingController();
-	
+	final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter.currency();
+
 	String label = ''; 
 	String price = '0,00'; 
-	List<String> labelsList = List.empty();
-  	List<String> priceList = List.empty();
-
-
-  int labelIndex = 0;
-  int priceIndex = 0;
-  int amount = 1;
+	int amount = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +37,6 @@ class _ScanScreenState extends State<ScanScreen> {
 		),
 		onViewModelReady: (model) {
 			model
-			..labelsList.onChange.listen(
-				(list) => labelsList = list.neu
-			)
-			..pricesList.onChange.listen(
-				(list) => priceList = list.neu
-			)
 			..label.onChange.listen(
 				(event) {
 					label = event.neu;
@@ -54,7 +46,7 @@ class _ScanScreenState extends State<ScanScreen> {
 			..price.onChange.listen(
 				(event) {
 					price = event.neu;
-					textPriceController.text = price;
+				//	textPriceController.text = price;
 				} 
 			);
 		},
@@ -76,7 +68,9 @@ class _ScanScreenState extends State<ScanScreen> {
 									hintText: 'TITULO DO PRODUTO',
 									border: InputBorder.none,
 									suffixIcon: IconButton(
-										onPressed: () {}, 
+										onPressed: () {
+											model.refreshLabel();
+										}, 
 										icon: Icon(
 											Icons.refresh,
 											color: Colors.black
@@ -94,10 +88,19 @@ class _ScanScreenState extends State<ScanScreen> {
 					children: [
 						SizedBox(
 							width: MediaQuery.of(context).size.width * 0.3,
-							child: TextField(
+							child: TextFormField(
 								controller: textPriceController,
 								textAlign: TextAlign.center,
 								textAlignVertical: TextAlignVertical.center,
+								initialValue: _formatter.formatString('2000'),
+								inputFormatters: <TextInputFormatter>[
+									CurrencyTextInputFormatter.currency(
+										locale: 'ko',
+										decimalDigits: 0,
+										symbol: 'R\$ ',
+									),
+								],
+           					 	keyboardType: TextInputType.number,
 								style: TextStyle(
 									fontSize: 16
 								),
@@ -105,7 +108,9 @@ class _ScanScreenState extends State<ScanScreen> {
 									hintText: 'RS770,00',
 									border: InputBorder.none,
 									suffixIcon: IconButton(
-										onPressed: () {}, 
+										onPressed: () {
+											model.refreshPrice();
+										}, 
 										icon: Icon(
 											Icons.refresh,
 											color: Colors.black
@@ -150,7 +155,7 @@ class _ScanScreenState extends State<ScanScreen> {
 				Row(
 					children: [
 						Text(
-							price,
+							FormatUtils.getDisplayPrice(price),
 							style: TextStyle(
 								fontSize: 30
 							),
@@ -161,7 +166,8 @@ class _ScanScreenState extends State<ScanScreen> {
 								backgroundColor: Colors.green,
 								foregroundColor: Colors.white
 							),
-							onPressed: (){}, 
+							onPressed: (){
+							}, 
 							icon: Icon(
 								Icons.shopping_cart
 							),
