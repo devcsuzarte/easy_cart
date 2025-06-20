@@ -2,6 +2,7 @@ import 'package:easy_cart/core/constants.dart';
 import 'package:easy_cart/core/database_manager.dart';
 import 'package:easy_cart/data/models/product.dart';
 import 'package:easy_cart/ui/pages/scanner/scan_screen.dart';
+import 'package:easy_cart/utils/format.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_cart/ui/pages/cart/cart_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
 
 	List<Product> products = List.empty();
-	double total = 0.0;
+	String total = '0.0';
 
 	@override
 	Widget build(BuildContext context) {
@@ -42,6 +43,10 @@ class _CartScreenState extends State<CartScreen> {
 							showDragHandle: true,
 							backgroundColor: Colors.white,
 							builder: (context) => ScanScreen()
+						).whenComplete(
+							(){
+								model.getData();
+							}
 						);
 					},
 					tooltip: "Ler etiqueta",
@@ -49,7 +54,7 @@ class _CartScreenState extends State<CartScreen> {
 				),
 				appBar: AppBar(
 					title: Text(
-						'Total: $total'
+						'Total: ${FormatUtils.getDisplayPrice(total)}'
 					),
 				),
 				body: Padding(

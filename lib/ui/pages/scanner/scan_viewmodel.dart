@@ -1,3 +1,4 @@
+import 'package:easy_cart/core/database_manager.dart';
 import 'package:easy_cart/core/scan_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
@@ -5,6 +6,7 @@ import 'package:stacked/stacked.dart';
 class ScanViewmodel extends FutureViewModel {
 
 	late ScanManager scanManager;
+	late DatabaseManager databaseManager;
 	final imagePicker = ImagePicker();
 
 	ReactiveValue<String> label = ReactiveValue(''), 
@@ -12,10 +14,12 @@ class ScanViewmodel extends FutureViewModel {
 	ReactiveValue<List<String>> labelsList = ReactiveValue(List.empty()), 
 		pricesList = ReactiveValue(List.empty());
 	ReactiveValue<int> labelSelected = ReactiveValue(0), 
-		priceSelected = ReactiveValue(0); 
+		priceSelected = ReactiveValue(0),
+		amount = ReactiveValue(1);
 
 	ScanViewmodel({
-		required this.scanManager
+		required this.scanManager,
+		required this.databaseManager
 	});
 
 	@override
@@ -39,6 +43,20 @@ class ScanViewmodel extends FutureViewModel {
 		}
 	}
 
+	Future<void> addItem() async {
+		try {
+			runBusyFuture(
+				databaseManager.create(
+					title: label.value, 
+					price: price.value, 
+					amount: amount.value
+				)
+			);
+		} catch (e){
+			throw Exception('Not able to add product: $e');
+		}
+	}
+
 	void setLabel(){
 		label.value = labelsList.value.isNotEmpty ? labelsList.value.first : '';
 		notifyListeners();
@@ -57,5 +75,17 @@ class ScanViewmodel extends FutureViewModel {
 	void refreshPrice() { 
 		pricesList.value.shuffle();
 		setPrice();
+	}
+
+	void increaseAmount(){
+		amount.value++;
+		notifyListeners();
+	}
+
+	void decreaseAmount(){
+		if(amount.value > 1){
+			amount.value--;
+		}
+		notifyListeners();
 	}
 }

@@ -32,7 +32,7 @@ class DatabaseManager {
 
 	Future<int> create ({
 		required String title, 
-		required double price, 
+		required String price, 
 		required int amount
 	}) async {
 		final db = await DatabaseService().database;

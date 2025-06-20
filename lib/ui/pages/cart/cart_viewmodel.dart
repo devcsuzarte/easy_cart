@@ -14,7 +14,7 @@ class CartViewModel extends FutureViewModel{
 	final imagePicker = ImagePicker();
 
 	ReactiveValue<List<Product>> productsList = ReactiveValue(List.empty());
-	ReactiveValue<double> total = ReactiveValue(0.0);
+	ReactiveValue<String> total = ReactiveValue('0.0');
 	
 	CartViewModel({
 		required this.databaseManager
@@ -25,19 +25,6 @@ class CartViewModel extends FutureViewModel{
 		await getData();
 	}
 
-	Future<void> addProduct(Product product) async {
-		productsList.value.add(product);
-		var price = product.price!.replaceAll(',', '.');
-
-		runBusyFuture(databaseManager.create(
-			title: product.title!, 
-			price: double.parse(price), 
-			amount: product.amount!
-			)
-		);
-		
-		await getData();
-	}
 
 	Future<void> getData() async {
 		productsList.value = await databaseManager.fetchAll;

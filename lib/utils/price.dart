@@ -2,7 +2,7 @@ import 'package:easy_cart/data/models/product.dart';
 
 class PriceUtils {
 	
-	static double getTotalPrice(List<Product> products){
+	static String getTotalPrice(List<Product> products){
 		double total = 0;
 
 		for(var product in products){
@@ -10,6 +10,6 @@ class PriceUtils {
 				total = total + (double.parse(product.price!) * product.amount!);
 			}
 		}
-		return total;
+		return total.toStringAsFixed(2);
 	}
 }
