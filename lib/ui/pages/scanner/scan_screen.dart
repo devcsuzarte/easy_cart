@@ -222,7 +222,11 @@ class _ScanScreenState extends State<ScanScreen> {
 							foregroundColor: Colors.white
 						),
 						onPressed: () {
-							model.addItem();
+							model.addItem().whenComplete(
+								(){
+									Navigator.pop(context);
+								}
+							);
 						}, 
 						child: Padding(
 							padding: const EdgeInsets.all(8.0),

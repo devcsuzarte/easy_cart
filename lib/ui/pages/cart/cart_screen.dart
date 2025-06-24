@@ -1,6 +1,7 @@
 import 'package:easy_cart/core/constants.dart';
 import 'package:easy_cart/core/database_manager.dart';
 import 'package:easy_cart/data/models/product.dart';
+import 'package:easy_cart/ui/pages/cart/cart_item.dart';
 import 'package:easy_cart/ui/pages/scanner/scan_screen.dart';
 import 'package:easy_cart/utils/format.dart';
 import 'package:flutter/material.dart';
@@ -52,19 +53,68 @@ class _CartScreenState extends State<CartScreen> {
 					tooltip: "Ler etiqueta",
 					child: kFloatingActionIcon
 				),
-				appBar: AppBar(
-					title: Text(
-						'Total: ${FormatUtils.getDisplayPrice(total)}'
-					),
+				appBar: PreferredSize(
+					preferredSize: const Size.fromHeight(80.0), 
+					child: Container(
+						padding: EdgeInsets.symmetric(horizontal: 24),
+						color: Colors.green,
+						child: SafeArea(
+							child: Row(
+								mainAxisAlignment: MainAxisAlignment.spaceBetween,
+								children: [
+									Column(
+										crossAxisAlignment: CrossAxisAlignment.start,
+										children: [
+											Text(
+												'Total:',
+												style: TextStyle(
+													fontSize: 15,
+													fontWeight: FontWeight.w700,
+													color: Colors.white
+												),
+											),
+											Text(
+												FormatUtils.getDisplayPrice(total),
+												style: TextStyle(
+													fontSize: 28,
+													fontWeight: FontWeight.w700,
+													color: Colors.white
+												)
+											)
+										],
+									),
+									Row(
+										children: [
+											IconButton.filled(
+												color: Colors.white,
+												onPressed: () {}, 
+												icon: Icon(
+													Icons.cancel
+												)
+											),
+											IconButton.filled(
+												onPressed: () {}, 
+												icon: Icon(
+													Icons.check_circle
+												)
+											)
+										],
+									)
+								]
+							)
+						)
+					)
 				),
 				body: Padding(
-				padding: const EdgeInsets.symmetric(horizontal: 8.0),
-				child: ListView.builder(
-					itemBuilder: (context, index) => Row(
-							children: [
-								Text('')
-							]
-						)
+					padding: const EdgeInsets.all(24),
+					child: ListView.separated(
+						itemBuilder: (context, index) => CartItem(
+							label: products[index].title ?? '',
+							amount: products[index].amount ?? 0, 
+							price: products[index].price ?? ''
+						),
+						separatorBuilder: (context, index) => const SizedBox(height: 10),
+						itemCount: products.length,
 					)
 				)
 			)

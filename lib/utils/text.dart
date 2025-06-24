@@ -1,7 +1,3 @@
-import 'dart:ffi';
-import 'package:easy_cart/ui/widgets/product_cell.dart';
-import 'package:flutter/cupertino.dart';
-
 class TextUtils {
  static String getConvertedPrice(String priceText) {
     String priceConverted = "";
