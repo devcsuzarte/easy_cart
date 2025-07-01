@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+//TABLE
+
+const String kProductTable = 'productList';
+const String kShopListTable = 'shopList';
+const String kShopHistoryTable = 'shopHistory';
+
 // COLORS
 
 const kProductLabelColor = Color(0xFFFFF203);

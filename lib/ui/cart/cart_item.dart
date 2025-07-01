@@ -1,6 +1,6 @@
-import 'package:easy_cart/core/constants.dart';
-import 'package:easy_cart/utils/format.dart';
+import 'package:easy_cart/ui/widgets/container_default.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_cart/utils/format.dart';
 
 class CartItem extends StatelessWidget {
   const CartItem({
@@ -15,20 +15,7 @@ class CartItem extends StatelessWidget {
 
 	@override
 	Widget build(BuildContext context) {
-		return Container(
-			padding: const EdgeInsets.all(8),
-			decoration: BoxDecoration(
-				color: Colors.white,
-				borderRadius: BorderRadius.circular(10),
-				boxShadow: [
-					BoxShadow(
-						 color: Colors.black12,
-						offset: Offset(0, 0),
-						blurRadius: 14,
-						spreadRadius: -3,
-					)
-				]
-			),
+		return ContainerDefault(
 			child: Row(
 				mainAxisAlignment: MainAxisAlignment.spaceBetween,
 				crossAxisAlignment: CrossAxisAlignment.center,
@@ -65,7 +52,7 @@ class CartItem extends StatelessWidget {
 						)
 					)
 				]
-			)
+			),
 		);
 	}
 }

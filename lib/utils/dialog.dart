@@ -1,11 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../pages/cart/cart_viewmodel.dart';
 import 'package:easy_cart/core/constants.dart';
 
 
-void cupertinoDialog(BuildContext context) {
+void cupertinoDialog({
+	required BuildContext context,
+	required Function defaultFunction,
+	required String title, 
+		message,
+		buttonTitle,
+	Function? alternativeFunction,
+	String? altFunctionMessage,
+	}
+){
   showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
@@ -15,14 +22,15 @@ void cupertinoDialog(BuildContext context) {
         CupertinoDialogAction(
           isDestructiveAction: true,
           child: kDialogActionDefaultText,
-          onPressed: () {
-            //Provider.of<CartViewModel>(context, listen: false).cleanCartList();
-            Navigator.pop(context);
-          },
+          onPressed: () => defaultFunction(),
         ),
         CupertinoDialogAction(
           child: kDialogActionDismissText,
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+			if(alternativeFunction != null){
+				alternativeFunction();
+			}			
+		  },
         ),
       ],
     ),

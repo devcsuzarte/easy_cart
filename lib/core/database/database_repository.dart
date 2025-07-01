@@ -1,48 +1,32 @@
+import 'package:easy_cart/core/constants.dart';
 import 'package:sqflite/sqflite.dart';
-import '../data/models/product.dart';
 import 'package:path/path.dart';
 
 class DatabaseManager {
-	final tableName = 'products';
-
 	Future<void> createTable(Database database) async {
 		await database.execute("""
-		CREATE TABLE IF NOT EXISTS $tableName (
+		CREATE TABLE IF NOT EXISTS $kProductTable (
 		id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-		lableTitle TEXT NOT NULL,
-		lablePrice TEXT NOT NULL,
+		title TEXT NOT NULL,
+		price TEXT NOT NULL,
+		amount INTEGER NOT NULL
+		)
+		""");
+
+		await database.execute("""
+		CREATE TABLE IF NOT EXISTS $kShopListTable (
+		id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+		title TEXT NOT NULL,
+		selected INTEGER NOT NULL,
 		amount INTEGER NOT NULL
 		)
 		""");
 	}
 
-	Future<List<Product>> get fetchAll async {
-		final db = await DatabaseService().database;
-		final data = await db.query(tableName);
-		
-		return data.map(
-				(e) => Product(
-				id: e['id'] as int?,
-				amount: e['amount'] as int?,
-				price: e['lablePrice'] as String?,
-				title: e['lableTitle'] as String?
-			),
-		).toList();
-	}
-
-	Future<int> create ({
-		required String title, 
-		required String price, 
-		required int amount
+	Future<int> delete ({
+		required int id, 
+		required String tableName
 	}) async {
-		final db = await DatabaseService().database;
-		return await db.rawInsert(
-			'''INSERT INTO $tableName (lableTitle, lablePrice, amount) VALUES (?,?,?)''',
-			[title, price, amount]
-		);
-	}
-
-	Future<int> delete(int id) async {
 		final db = await DatabaseService().database;
 		return await db.delete(
 			tableName,
@@ -51,7 +35,7 @@ class DatabaseManager {
 		);
 	}
 
-	Future<int> deleteTable() async {
+	Future<int> deleteTable(String tableName) async {
 		final db = await DatabaseService().database;
 		return await db.delete(tableName);
 	}

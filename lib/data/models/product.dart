@@ -1,9 +1,14 @@
 class Product {
 
-  int? id;
-  int? amount;
-  String? title;
-  String? price;
+	final int amount;
+	final String title,
+  		price;
+	final int? id;
 
-  Product({this.amount, this.price, this.title, this.id});
+	Product({
+		this.id, 
+		required this.amount, 
+		required this.price, 
+		required this.title
+	});
 }

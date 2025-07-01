@@ -1,12 +1,13 @@
-import 'package:easy_cart/core/database_manager.dart';
+import 'package:easy_cart/core/database/product_manager.dart';
 import 'package:easy_cart/core/scan_manager.dart';
+import 'package:easy_cart/data/models/product.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 
 class ScanViewmodel extends FutureViewModel {
 
 	late ScanManager scanManager;
-	late DatabaseManager databaseManager;
+	late ProductManager productManager;
 	final imagePicker = ImagePicker();
 
 	ReactiveValue<String> label = ReactiveValue(''), 
@@ -19,7 +20,7 @@ class ScanViewmodel extends FutureViewModel {
 
 	ScanViewmodel({
 		required this.scanManager,
-		required this.databaseManager
+		required this.productManager
 	});
 
 	@override
@@ -44,13 +45,14 @@ class ScanViewmodel extends FutureViewModel {
 	}
 
 	Future<void> addItem() async {
+		Product newProduct = Product(
+			amount: amount.value, 
+			price: price.value, 
+			title: label.value
+		);
 		try {
 			runBusyFuture(
-				databaseManager.create(
-					title: label.value, 
-					price: price.value, 
-					amount: amount.value
-				)
+				productManager.addProduct(product: newProduct)
 			);
 		} catch (e){
 			throw Exception('Not able to add product: $e');

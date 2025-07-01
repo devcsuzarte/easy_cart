@@ -1,6 +1,7 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
-import 'package:easy_cart/core/database_manager.dart';
-import 'package:easy_cart/ui/pages/scanner/scan_viewmodel.dart';
+import 'package:easy_cart/core/database/database_repository.dart';
+import 'package:easy_cart/core/database/product_manager.dart';
+import 'package:easy_cart/ui/scan/scan_viewmodel.dart';
 import 'package:easy_cart/utils/format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -39,7 +40,7 @@ class _ScanScreenState extends State<ScanScreen> {
 	return ViewModelBuilder.reactive(
 		viewModelBuilder: () => ScanViewmodel(
 			scanManager: context.read<ScanManager>(),
-			databaseManager: context.read<DatabaseManager>()
+			productManager: context.read<ProductManager>()
 		),
 		onViewModelReady: (model) {
 			model
