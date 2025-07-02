@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
 		return Scaffold(
 			body: _pages[_selectedIndex],
 			floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-			floatingActionButton: FloatingActionButton(
+			floatingActionButton: _selectedIndex > 0 ? null : FloatingActionButton(
 				backgroundColor: Colors.green,
 				onPressed: () {
 					showModalBottomSheet(
@@ -43,9 +43,7 @@ class _HomePageState extends State<HomePage> {
 				},
 				tooltip: "Run action",
 				child: Icon(
-					_selectedIndex != 0 ? 
-						Icons.add : 
-						CupertinoIcons.barcode_viewfinder,
+					CupertinoIcons.barcode_viewfinder,
 					color: Colors.white,
 					size: 40,
 				)
@@ -55,13 +53,13 @@ class _HomePageState extends State<HomePage> {
 				onTap: _onTapped,
 				items: [
 					BottomNavigationBarItem(
-						label: 'Meu carrinho',
+						label: 'Carrinho',
 						icon: Icon(
 							Icons.shopping_cart,
 						)
 					),
 					BottomNavigationBarItem(
-						label: 'Minha Lista',
+						label: 'Lista',
 						icon: Icon(
 							Icons.list
 						)

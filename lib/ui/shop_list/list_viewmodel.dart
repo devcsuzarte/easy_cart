@@ -41,6 +41,15 @@ class ListViewModel extends FutureViewModel{
 		);
 		await getList();
 	}
+	
+	void toggleSelected({
+		required int id, 
+		required bool newStatus
+	}) async {
+		shopListManager.toggleSelected(id: id, newStatus: newStatus);
+		notifyListeners();
+		await getList();
+	}
 
 	void cleanList() async {
 		shopListManager.cleanList();

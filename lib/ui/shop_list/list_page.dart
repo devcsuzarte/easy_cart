@@ -36,44 +36,71 @@ class _ShopListPageState extends State<ShopListPage> {
 				title: Text(
 					'Lista de Compras',
 					style: TextStyle(
-						fontWeight: FontWeight.bold,
-						color: Colors.white
+						color: Colors.white,
+						fontWeight: FontWeight.w600
 					)
-				)
+				),
+				centerTitle: false,
+				actions: [
+					IconButton(
+						onPressed: () {}, 
+						icon: Icon(
+							color: Colors.white,
+							Icons.delete
+						)
+					),
+					IconButton(
+						color: Colors.white,
+						onPressed: () {
+							showModalBottomSheet(
+								context: context,
+								showDragHandle: true,
+								backgroundColor: Colors.white,
+								builder: (context) 
+									=> ListAddItem(model: model)
+							);
+						}, 
+						icon: Icon(
+							Icons.add_box
+						)
+					),
+				],
 			),
-			// floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-			// floatingActionButton: FloatingActionButton(
-			// 	onPressed: () {
-			// 		showModalBottomSheet(
-			// 			context: context,
-			// 			showDragHandle: true,
-			// 			backgroundColor: Colors.white,
-			// 			builder: (context) 
-			// 				=> ListAddItem(model: model)
-			// 		);
-			// 	},
-			// 	tooltip: 'Ler etiqueta',
-			// 	child: Icon(Icons.add)
-			// ),
 			body: Padding(
 				padding: const EdgeInsets.all(24.0),
 				child: ListView.separated(
 					itemBuilder: (context, index) => ContainerDefault(
-						child: ListTile(
-							title: Text(
-								shopList[index].title
-							),
-							subtitle: Text(
-								'Quantidade ${shopList[index].amount}',
-							),
-							trailing: Checkbox(
-								value: shopList[index].selected, 
-								onChanged: (value){
-									
-								}
-							),
+						child: Row(
+							mainAxisAlignment: MainAxisAlignment.spaceBetween,
+							children: [
+								Column(
+									crossAxisAlignment: CrossAxisAlignment.start,
+									children: [
+										Text(
+											shopList[index].title,
+											style: TextStyle(
+												fontSize: 18,
+												fontWeight: FontWeight.w600
+											)
+										),
+										Text(
+											'Quantidade ${shopList[index].amount}',
+											style: TextStyle(
+												fontSize: 15,
+												color: Color(0xFF474747)
+											)
+										)
+									]
+								),
+								Checkbox(
+									value: shopList[index].selected, 
+									onChanged: (value) {
+										model.toggleSelected(id: shopList[index].id!, newStatus: value!);
+									}
+								)
+							]
 						)
-					), 
+					),
 					separatorBuilder: (context, index) => const SizedBox(height: 8), 
 					itemCount: shopList.length
 					)

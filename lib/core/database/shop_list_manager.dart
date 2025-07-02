@@ -38,6 +38,17 @@ class ShopListManager {
 		return DatabaseManager().delete(id: id, tableName: kShopListTable);
 	}
 
+	Future<int> toggleSelected({
+		required int id,
+		required bool newStatus
+	}) async {
+		final db = await DatabaseService().database;
+		return await db.rawUpdate(
+			'UPDATE $kShopListTable SET selected = ? WHERE id = ?',
+  			[newStatus ? 1 : 0, id]
+		);
+	}
+
 	Future<int> cleanList() async {
 		final db = await DatabaseService().database;
 		return await db.delete(kShopListTable);

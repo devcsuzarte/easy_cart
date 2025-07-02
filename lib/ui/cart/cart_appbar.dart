@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 
 class CartAppbar extends StatelessWidget {
 	final String total;
-	final Function onCancel, onConfirm;
+	final Function onConfirm;
 
   	const CartAppbar({
 		required this.total,
-		required this.onCancel,
 		required this.onConfirm,
 		super.key
 	});
@@ -42,22 +41,20 @@ class CartAppbar extends StatelessWidget {
 								)
 							]
 						),
-						Row(
-							children: [
-								IconButton.filled(
+						TextButton(
+							style: TextButton.styleFrom(
+								backgroundColor: Colors.white38,
+							),
+							onPressed: () {
+								onConfirm();
+							} , 
+							child: Text(
+								'Concluir',
+								style: TextStyle(
 									color: Colors.white,
-									onPressed: () => onCancel, 
-									icon: Icon(
-										Icons.cancel
-									)
+									fontWeight: FontWeight.w800
 								),
-								IconButton.filled(
-									onPressed: () => onConfirm, 
-									icon: Icon(
-										Icons.check_circle
-									)
-								)
-							]
+							)
 						)
 					]
 				)

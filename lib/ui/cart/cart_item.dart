@@ -16,40 +16,37 @@ class CartItem extends StatelessWidget {
 	@override
 	Widget build(BuildContext context) {
 		return ContainerDefault(
-			child: Row(
-				mainAxisAlignment: MainAxisAlignment.spaceBetween,
-				crossAxisAlignment: CrossAxisAlignment.center,
+			child: Column(
+				crossAxisAlignment: CrossAxisAlignment.start,
 				children: [
-					SizedBox(
-						width: MediaQuery.sizeOf(context).width * 0.6,
-						child: Column(
-							crossAxisAlignment: CrossAxisAlignment.start,
-							children: [
-								Text(
-									label,
-									softWrap: true,
-									style: TextStyle(
-										fontSize: 18,
-										fontWeight: FontWeight.w600
-									)
-								),
-								Text(
-									'Quantidade: $amount',
-									style: TextStyle(
-										fontSize: 15,
-										color: Color(0xFF474747)
-									)
-								)
-							]
+					Text(
+						label,
+						softWrap: true,
+						style: TextStyle(
+							fontSize: 18,
+							fontWeight: FontWeight.w600
 						)
 					),
-					Text(
-						FormatUtils.getDisplayPrice(price),
-						style:  TextStyle(
-							fontSize: 18,
-							fontWeight: FontWeight.bold,
-							color: Colors.green
-						)
+					const SizedBox(height: 5),
+					Row(
+						mainAxisAlignment: MainAxisAlignment.spaceBetween,
+						children: [
+							Text(
+								'Quantidade: $amount',
+								style: TextStyle(
+									fontSize: 15,
+									color: Color(0xFF474747)
+								)
+							),
+							Text(
+								FormatUtils.getDisplayPrice(price),
+								style:  TextStyle(
+									fontSize: 18,
+									fontWeight: FontWeight.bold,
+									color: Colors.green
+								)
+							)
+						]
 					)
 				]
 			),

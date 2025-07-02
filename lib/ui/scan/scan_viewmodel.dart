@@ -44,11 +44,14 @@ class ScanViewmodel extends FutureViewModel {
 		}
 	}
 
-	Future<void> addItem() async {
+	Future<void> addItem({
+		required String title,
+		required String price
+	}) async {
 		Product newProduct = Product(
 			amount: amount.value, 
-			price: price.value, 
-			title: label.value
+			price: price, 
+			title: title
 		);
 		try {
 			runBusyFuture(
@@ -66,6 +69,11 @@ class ScanViewmodel extends FutureViewModel {
 
 	void setPrice(){
 		price.value = pricesList.value.isNotEmpty ? pricesList.value.first : '0,00';
+		notifyListeners();
+	}
+
+	void updatePriceFromView(String newPrice){
+		price.value = newPrice;
 		notifyListeners();
 	}
 

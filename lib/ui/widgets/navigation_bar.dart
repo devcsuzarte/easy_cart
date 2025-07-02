@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 class DefaultNavBar extends StatelessWidget {
-	const DefaultNavBar({super.key, required this.selectedIndex, required this.onTap});
+	const DefaultNavBar({
+		super.key, 
+		required this.selectedIndex, 
+		required this.onTap
+	});
 
 	final int selectedIndex;
 	final Function(int) onTap;
+
 	@override
 	Widget build(BuildContext context) {
 		return BottomAppBar(
@@ -21,7 +26,7 @@ class DefaultNavBar extends StatelessWidget {
 							Icons.list,
 						),
 						onPressed: () => onTap
-					),
+					)
 				]
 			)
 		);

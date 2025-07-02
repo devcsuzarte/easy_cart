@@ -169,7 +169,8 @@ class _ScanScreenState extends State<ScanScreen> {
 									decoration: InputDecoration(
 										hintText: 'Preço',
 										border: InputBorder.none
-									)
+									),
+									onChanged: (value) => model.updatePriceFromView(value),
 								)
 							)
 						]
@@ -223,7 +224,10 @@ class _ScanScreenState extends State<ScanScreen> {
 							foregroundColor: Colors.white
 						),
 						onPressed: () {
-							model.addItem().whenComplete(
+							model.addItem(
+								title: textLabelController.text,
+								price: textPriceController.text
+							).whenComplete(
 								(){
 									Navigator.pop(context);
 								}

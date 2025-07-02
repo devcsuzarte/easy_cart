@@ -6,10 +6,16 @@ class PriceUtils {
 		double total = 0;
 
 		for(var product in products){
-			if(product.price != null && product.amount != null){
-				total = total + (double.parse(product.price!) * product.amount!);
-			}
+			total = total + (convertPrice(product.price) * product.amount);
 		}
 		return total.toStringAsFixed(2);
+	}
+
+	static double convertPrice(String price){
+		String priceWithouMask = price.replaceRange(0, 3, '');
+		String priceConverted = priceWithouMask.replaceAll(',', '.');
+		
+		return double.tryParse(priceConverted) ?? 0.00;
+		
 	}
 }

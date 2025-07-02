@@ -28,7 +28,7 @@ class CartViewModel extends FutureViewModel{
 
 	Future<void> getData() async {
 		productsList.value = await productManager.fetchAll(kProductTable);
-		setTotalCartPrice();
+		total.value = PriceUtils.getTotalPrice(productsList.value);
 		notifyListeners();
 	}
 
@@ -42,10 +42,5 @@ class CartViewModel extends FutureViewModel{
 	void cleanCartList() async {
 		productManager.cleanCart();
 		await getData();
-	}
-
-	void setTotalCartPrice() {
-		total.value = PriceUtils.getTotalPrice(productsList.value);
-		notifyListeners();
 	}
 }
