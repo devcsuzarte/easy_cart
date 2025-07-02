@@ -1,10 +1,10 @@
-class ShopItem {
+class ListItem {
 	int? id;
 	String title;
 	bool selected;
 	int amount;
 
-	ShopItem({
+	ListItem({
 		this.id,
 		required this.title,
 		required this.amount,

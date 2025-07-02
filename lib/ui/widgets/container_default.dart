@@ -4,14 +4,22 @@ class ContainerDefault extends StatelessWidget {
 
   	const ContainerDefault({
 		required this.child,
+		this.onPress,
 		super.key
 	});
 
   final Widget child;
+  final Function? onPress;
 
   	@override
 	Widget build(BuildContext context) {
-		return Container(
+		return GestureDetector(
+			onTap: (){
+				if(onPress != null){
+					onPress!();
+				}
+			},
+			child: Container(
 			padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
 			decoration: BoxDecoration(
 				color: Colors.white,
@@ -26,6 +34,7 @@ class ContainerDefault extends StatelessWidget {
 				]
 			),
 			child: child
+			)
 		);
 	}
 }

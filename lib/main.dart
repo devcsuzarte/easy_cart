@@ -1,6 +1,7 @@
 import 'package:easy_cart/core/database/product_manager.dart';
 import 'package:easy_cart/core/database/shop_list_manager.dart';
-import 'package:easy_cart/ui/home.dart';
+import 'package:easy_cart/ui/cart/cart_page.dart';
+import 'package:easy_cart/ui/shop_list/list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_cart/core/database/database_repository.dart';
@@ -27,18 +28,24 @@ class MyApp extends StatelessWidget {
 					create: (context) => ProductManager()
 				),
 				Provider(
-					create: (context) => ShopListManager()
+					create: (context) => ListManager()
 				)
 			],
 			child: MaterialApp(
+				initialRoute: '/',
+				routes: {
+					// When navigating to the "/" route, build the FirstScreen widget.
+					'/': (context) => const CartPage(),
+					// When navigating to the "/second" route, build the SecondScreen widget.
+					'/list': (context) => const ListPage(),
+  				},
 				title: 'Easy Cart',
 				theme: ThemeData(
 				colorScheme: ColorScheme.fromSeed(
 					seedColor: Colors.green
 				),
 				useMaterial3: true,
-				),
-				home: HomePage()
+				)
 			)
 		);
 	}

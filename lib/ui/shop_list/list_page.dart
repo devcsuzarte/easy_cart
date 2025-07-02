@@ -9,21 +9,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
-class ShopListPage extends StatefulWidget {
-  const ShopListPage({super.key});
+class ListPage extends StatefulWidget {
+  const ListPage({super.key});
 
   @override
-  State<ShopListPage> createState() => _ShopListPageState();
+  State<ListPage> createState() => _ListPageState();
 }
 
-class _ShopListPageState extends State<ShopListPage> {
-	List<ShopItem> shopList = List.empty(growable: true);
+class _ListPageState extends State<ListPage> {
+	List<ListItem> shopList = List.empty(growable: true);
 
 	@override
 	Widget build(BuildContext context) {
 		return ViewModelBuilder<ListViewModel>.reactive(
 			viewModelBuilder: () => ListViewModel(
-				shopListManager: context.read<ShopListManager>()
+				listManager: context.read<ListManager>()
 			),
 			onViewModelReady: (model) {
 				model.shopList.onChange.listen(
@@ -33,21 +33,17 @@ class _ShopListPageState extends State<ShopListPage> {
 			builder: (context, model, widget) => Scaffold(
 			appBar: AppBar(
 				backgroundColor: Colors.green,
+				foregroundColor: Colors.white,
 				title: Text(
 					'Lista de Compras',
 					style: TextStyle(
-						color: Colors.white,
 						fontWeight: FontWeight.w600
 					)
 				),
-				centerTitle: false,
 				actions: [
 					IconButton(
 						onPressed: () {}, 
-						icon: Icon(
-							color: Colors.white,
-							Icons.delete
-						)
+						icon: Icon(Icons.delete)
 					),
 					IconButton(
 						color: Colors.white,
@@ -67,7 +63,7 @@ class _ShopListPageState extends State<ShopListPage> {
 				],
 			),
 			body: Padding(
-				padding: const EdgeInsets.all(24.0),
+				padding: const EdgeInsets.all(15.0),
 				child: ListView.separated(
 					itemBuilder: (context, index) => ContainerDefault(
 						child: Row(
@@ -84,7 +80,7 @@ class _ShopListPageState extends State<ShopListPage> {
 											)
 										),
 										Text(
-											'Quantidade ${shopList[index].amount}',
+											'Quantidade: ${shopList[index].amount}',
 											style: TextStyle(
 												fontSize: 15,
 												color: Color(0xFF474747)

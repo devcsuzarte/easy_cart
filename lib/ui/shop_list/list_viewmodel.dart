@@ -5,13 +5,13 @@ import 'package:stacked/stacked.dart';
 
 class ListViewModel extends FutureViewModel{
 
-	late ShopListManager shopListManager;
+	late ListManager listManager;
 
 	ListViewModel({
-		required this.shopListManager
+		required this.listManager
 	});
 
-	ReactiveValue<List<ShopItem>> shopList = ReactiveValue(List.empty());
+	ReactiveValue<List<ListItem>> shopList = ReactiveValue(List.empty());
 
 	@override
 	Future futureToRun() async {
@@ -19,7 +19,7 @@ class ListViewModel extends FutureViewModel{
 	}
 
 	Future<void> getList() async {
-		shopList.value = await shopListManager.fetchAll(kShopListTable);
+		shopList.value = await listManager.fetchAll(kShopListTable);
 		notifyListeners();
 	}
 
@@ -27,16 +27,16 @@ class ListViewModel extends FutureViewModel{
 		required String title,
 		required int amount
 	}) async {
-		ShopItem newItem = ShopItem(
+		ListItem newItem = ListItem(
 			title: title, 
 			amount: amount
 		);
-		shopListManager.addItem(shopItem: newItem);
+		listManager.addItem(shopItem: newItem);
 		await getList();
 	}
 
 	void deleteItem(int itemId) async {
-		shopListManager.deleteItem(
+		listManager.deleteItem(
 			id: itemId
 		);
 		await getList();
@@ -46,13 +46,13 @@ class ListViewModel extends FutureViewModel{
 		required int id, 
 		required bool newStatus
 	}) async {
-		shopListManager.toggleSelected(id: id, newStatus: newStatus);
+		listManager.toggleSelected(id: id, newStatus: newStatus);
 		notifyListeners();
 		await getList();
 	}
 
 	void cleanList() async {
-		shopListManager.cleanList();
+		listManager.cleanList();
 		await getList();
 	}
 }

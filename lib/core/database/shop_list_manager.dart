@@ -2,14 +2,14 @@ import 'package:easy_cart/core/constants.dart';
 import 'package:easy_cart/core/database/database_repository.dart';
 import 'package:easy_cart/data/models/shop_item.dart';
 
-class ShopListManager {
+class ListManager {
 	
-	Future<List<ShopItem>> fetchAll(String tableName) async {
+	Future<List<ListItem>> fetchAll(String tableName) async {
 		final db = await DatabaseService().database;
 		final data = await db.query(tableName);
 		
 		return data.map(
-			(e) => ShopItem(
+			(e) => ListItem(
 				id: e['id'] as int,
 				amount: e['amount'] as int,
 				title: e['title'] as String,
@@ -19,7 +19,7 @@ class ShopListManager {
 	}
 
 	Future<int> addItem ({
-		required ShopItem shopItem
+		required ListItem shopItem
 	}) async {
 		final db = await DatabaseService().database;
 		return await db.rawInsert(
