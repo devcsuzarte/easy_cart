@@ -1,12 +1,11 @@
-import 'package:easy_cart/core/database/product_manager.dart';
-import 'package:easy_cart/core/scan_manager.dart';
-import 'package:easy_cart/data/models/product.dart';
+import 'package:easy_cart/core/managers/product_manager.dart';
+import 'package:easy_cart/utils/scanner.dart';
+import 'package:easy_cart/core/models/product.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 
 class ScanViewmodel extends FutureViewModel {
 
-	late ScanManager scanManager;
 	late ProductManager productManager;
 	final imagePicker = ImagePicker();
 
@@ -19,7 +18,6 @@ class ScanViewmodel extends FutureViewModel {
 		amount = ReactiveValue(1);
 
 	ScanViewmodel({
-		required this.scanManager,
 		required this.productManager
 	});
 
@@ -30,11 +28,12 @@ class ScanViewmodel extends FutureViewModel {
 
 	Future<void> scanLabel() async {
 		final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+		final Scanner scanner = Scanner();
 		try {
-			await scanManager.processScan(pickedFile!);
+			await scanner.processScan(pickedFile!);
 
-			labelsList.value = scanManager.getLabels();
-			pricesList.value = scanManager.getPrices();
+			labelsList.value = scanner.getLabels();
+			pricesList.value = scanner.getPrices();
 
 			setLabel();
 			setPrice();

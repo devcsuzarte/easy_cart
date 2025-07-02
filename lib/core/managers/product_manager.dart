@@ -1,6 +1,6 @@
 import 'package:easy_cart/core/constants.dart';
 import 'package:easy_cart/core/database/database_repository.dart';
-import 'package:easy_cart/data/models/product.dart';
+import 'package:easy_cart/core/models/product.dart';
 
 class ProductManager {
 	

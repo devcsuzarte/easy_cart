@@ -1,11 +1,12 @@
-import 'package:easy_cart/core/database/product_manager.dart';
-import 'package:easy_cart/core/database/shop_list_manager.dart';
+import 'package:easy_cart/core/managers/product_manager.dart';
+import 'package:easy_cart/core/managers/list_manager.dart';
 import 'package:easy_cart/ui/cart/cart_page.dart';
-import 'package:easy_cart/ui/shop_list/list_page.dart';
+import 'package:easy_cart/ui/history/history.dart';
+import 'package:easy_cart/ui/list/list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_cart/core/database/database_repository.dart';
-import 'package:easy_cart/core/scan_manager.dart';
+import 'package:easy_cart/utils/scanner.dart';
 
 void main() {
 	runApp(const MyApp());
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
 					create: (context) => DatabaseManager()
 				),
 				Provider(
-					create: (context) => ScanManager()
+					create: (context) => Scanner()
 				),
 				Provider(
 					create: (context) => ProductManager()
@@ -34,10 +35,9 @@ class MyApp extends StatelessWidget {
 			child: MaterialApp(
 				initialRoute: '/',
 				routes: {
-					// When navigating to the "/" route, build the FirstScreen widget.
 					'/': (context) => const CartPage(),
-					// When navigating to the "/second" route, build the SecondScreen widget.
 					'/list': (context) => const ListPage(),
+					'/history': (context) => const HistoryPage(),
   				},
 				title: 'Easy Cart',
 				theme: ThemeData(

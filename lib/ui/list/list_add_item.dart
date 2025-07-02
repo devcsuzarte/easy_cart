@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:easy_cart/data/models/shop_item.dart';
-import 'package:easy_cart/ui/shop_list/list_viewmodel.dart';
+import 'package:easy_cart/core/models/shop_item.dart';
+import 'package:easy_cart/ui/list/list_viewmodel.dart';
 import 'package:easy_cart/ui/widgets/stepper.dart';
 import 'package:easy_cart/utils/theme.dart';
 import 'package:flutter/material.dart';

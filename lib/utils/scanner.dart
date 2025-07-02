@@ -3,7 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:easy_cart/utils/text.dart';
 
-class ScanManager {
+class Scanner {
 	final List<String> _possibleLables = [];
   	final List<String> _possiblePrices = [];
 

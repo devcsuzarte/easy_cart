@@ -1,7 +1,7 @@
 import 'package:easy_cart/core/constants.dart';
-import 'package:easy_cart/core/database/product_manager.dart';
-import 'package:easy_cart/core/scan_manager.dart';
-import 'package:easy_cart/data/models/product.dart';
+import 'package:easy_cart/core/managers/product_manager.dart';
+import 'package:easy_cart/utils/scanner.dart';
+import 'package:easy_cart/core/models/product.dart';
 import 'package:easy_cart/utils/price.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
@@ -9,7 +9,7 @@ import 'package:stacked/stacked.dart';
 
 class CartViewModel extends FutureViewModel{
 
-	late ScanManager scanManager;
+	late Scanner scanManager;
 	late ProductManager productManager;
 	final imagePicker = ImagePicker();
 

@@ -1,13 +1,13 @@
-import 'package:easy_cart/core/database/product_manager.dart';
-import 'package:easy_cart/ui/scan/scan_screen.dart';
-import 'package:easy_cart/ui/widgets/container_default.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
-import 'package:easy_cart/data/models/product.dart';
+import 'package:easy_cart/core/models/product.dart';
+import 'package:easy_cart/core/managers/product_manager.dart';
 
+import 'package:easy_cart/ui/scan/scan_screen.dart';
+import 'package:easy_cart/ui/widgets/container_default.dart';
+import 'package:easy_cart/ui/widgets/dialog.dart';
 import 'package:easy_cart/ui/cart/cart_item.dart';
 import 'package:easy_cart/ui/cart/cart_viewmodel.dart';
 import 'package:easy_cart/ui/cart/cart_appbar.dart';
@@ -46,7 +46,21 @@ class _CartPageState extends State<CartPage> {
 					child: CartAppbar(
 						total: total,
 						onConfirm: () {
-							model.cleanCartList();
+							DefaultDialog(
+								context: context, 
+								defaultFunction: (){
+									model.cleanCartList();
+									Navigator.pop(context);
+								}, 
+								alternativeFunction: () {
+									Navigator.pop(context);
+								},
+								altFunctionMessage: 'Cancelar',
+								title: 'Confirmar exclusão', 
+								message: 'Todos os itens serão deletados do seu carrinho', 
+								buttonTitle: 'Confirmar',
+								primaryButtonDestructive: true
+							).showDefaultDialog();
 						}
 					)
 				),
@@ -66,9 +80,9 @@ class _CartPageState extends State<CartPage> {
 					},
 					tooltip: "Run action",
 					child: Icon(
-						CupertinoIcons.barcode_viewfinder,
+						Icons.add_shopping_cart_rounded,
 						color: Colors.white,
-						size: 40,
+						size: 35
 					)
 				),
 				body: Column(
@@ -104,6 +118,12 @@ class _CartPageState extends State<CartPage> {
 										)
 									),
 									ContainerDefault(
+										onPress: (){
+											Navigator.pushNamed(
+												context, 
+												'/history'
+											);
+										},
 										child: Column(
 											children: [
 												Icon(
@@ -116,7 +136,7 @@ class _CartPageState extends State<CartPage> {
 													'Compras Anteriores',
 													style: TextStyle(
 														fontWeight: FontWeight.bold
-													),
+													)
 												)
 											]
 										)

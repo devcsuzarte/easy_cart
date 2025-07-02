@@ -1,9 +1,9 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:easy_cart/core/database/shop_list_manager.dart';
-import 'package:easy_cart/data/models/shop_item.dart';
-import 'package:easy_cart/ui/shop_list/list_add_item.dart';
-import 'package:easy_cart/ui/shop_list/list_viewmodel.dart';
+import 'package:easy_cart/core/managers/list_manager.dart';
+import 'package:easy_cart/core/models/shop_item.dart';
+import 'package:easy_cart/ui/list/list_add_item.dart';
+import 'package:easy_cart/ui/list/list_viewmodel.dart';
 import 'package:easy_cart/ui/widgets/container_default.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
