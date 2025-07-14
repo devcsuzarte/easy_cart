@@ -3,43 +3,36 @@ import 'package:easy_cart/utils/format.dart';
 import 'package:flutter/material.dart';
 
 class HistoryItem extends StatelessWidget {
-	const HistoryItem({super.key, required this.purschaseDate, required this.totalItems, required this.totalValue, required this.showItems});
+	const HistoryItem({
+		super.key, 
+		required this.date,
+		required this.total
+	});
 
-	final String purschaseDate, totalItems, totalValue;
-	final bool showItems;
+	final String date, total;
 
 	@override
 	Widget build(BuildContext context) {
 		return ContainerDefault(
-			child: Column(
+			child: Row(
+				mainAxisAlignment: MainAxisAlignment.spaceBetween,
 				children: [
-					Row(
-						children: [
-							Column(
-								children: [
-									Text(
-										FormatUtils.getDisplayPrice(totalValue)
-									),
-									Text(
-										'Data da compra: $purschaseDate'
-									),
-									Text(
-										'$totalItems itens'
-									)
-								],
-							),
-							Icon(
-							showItems ?
-								Icons.keyboard_arrow_up : Icons.keyboard_arrow_down
-							)
-						]
+					Text(
+						date,
+						style: TextStyle(
+							fontSize: 18,
+							fontWeight: FontWeight.w600
+						)
 					),
-
-					if(showItems)
-					SizedBox(
-						//list of items
+					Text(
+						FormatUtils.getDisplayPrice(total),
+						style:  TextStyle(
+							fontSize: 18,
+							fontWeight: FontWeight.bold,
+							color: Colors.green
+						)
 					)
-				],
+				]
 			)
 		);
 	}

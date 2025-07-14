@@ -1,7 +1,7 @@
 import 'package:easy_cart/core/managers/product_manager.dart';
 import 'package:easy_cart/core/managers/list_manager.dart';
 import 'package:easy_cart/ui/cart/cart_page.dart';
-import 'package:easy_cart/ui/history/history.dart';
+import 'package:easy_cart/ui/history/history_page.dart';
 import 'package:easy_cart/ui/list/list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -1,14 +1,14 @@
-import 'package:easy_cart/core/models/product.dart';
-
-class History {
+class Cart {
+	final int? id,
+		totalItems;
 	final String date,
 		total;
-	final List<Product> products;
 
-	History({
+	Cart({
+		this.id,
 		required this.date,
-		required this.total,
-		required this.products
+		required this.totalItems,
+		required this.total
 	});
 
 }

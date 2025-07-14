@@ -1,5 +1,6 @@
 import 'package:easy_cart/core/constants.dart';
 import 'package:easy_cart/core/managers/product_manager.dart';
+import 'package:easy_cart/core/models/history.dart';
 import 'package:easy_cart/utils/scanner.dart';
 import 'package:easy_cart/core/models/product.dart';
 import 'package:easy_cart/utils/price.dart';
@@ -21,13 +22,12 @@ class CartViewModel extends FutureViewModel{
 	});
 
 	@override
-	 Future futureToRun() async {
+	Future futureToRun() async {
 		await getData();
 	}
 
-
 	Future<void> getData() async {
-		productsList.value = await productManager.fetchAll(kProductTable);
+		productsList.value = await productManager.fetchProducts(kProductTable);
 		total.value = PriceUtils.getTotalPrice(productsList.value);
 		notifyListeners();
 	}
@@ -40,7 +40,18 @@ class CartViewModel extends FutureViewModel{
 	}
 
 	void cleanCartList() async {
-		productManager.cleanCart();
+		Cart cart = Cart(
+			date: DateTime.now().millisecondsSinceEpoch.toString(),
+			totalItems: productsList.value.length, 
+			total: total.value
+		);
+
+		await productManager.saveCart(cart: cart).whenComplete(
+			(){
+				productManager.cleanCart();
+			}
+		);
+		
 		await getData();
 	}
 }

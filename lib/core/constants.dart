@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 
 const String kProductTable = 'productList';
 const String kShopListTable = 'shopList';
-const String kShopHistoryTable = 'shopHistory';
+const String kCartHistoryTable = 'shopHistory';
 
 // COLORS
 

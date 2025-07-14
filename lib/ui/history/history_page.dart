@@ -1,7 +1,11 @@
+import 'package:easy_cart/core/managers/product_manager.dart';
 import 'package:easy_cart/core/models/history.dart';
+import 'package:easy_cart/ui/history/history_item.dart';
 import 'package:easy_cart/ui/history/history_viewmodel.dart';
 import 'package:easy_cart/ui/widgets/container_default.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -13,13 +17,26 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
 
-	List<History> historyList = List.empty();
+	List<Cart> historyList = List.empty();
+
+	String getConvertedDate(String date){
+		DateTime convertedDate =  DateTime.fromMillisecondsSinceEpoch(
+			int.parse(date)
+		);
+
+		return DateFormat.yMMMd().format(convertedDate);
+	}
 
   	@override
 	Widget build(BuildContext context) {
 		return ViewModelBuilder<HistoryViewmodel>.reactive(
-			viewModelBuilder: () => HistoryViewmodel(),
+			viewModelBuilder: () => HistoryViewmodel(
+				productManager: context.read<ProductManager>()
+			),
 			onViewModelReady: (model) {
+				model.history.onChange.listen(
+					(list) => historyList = list.neu
+				);
 			} ,
 			builder: (context, model, widget) => Scaffold(
 			appBar: AppBar(
@@ -35,31 +52,9 @@ class _HistoryPageState extends State<HistoryPage> {
 			body: Padding(
 				padding: const EdgeInsets.all(15.0),
 				child: ListView.separated(
-					itemBuilder: (context, index) => ContainerDefault(
-						child: Row(
-							mainAxisAlignment: MainAxisAlignment.spaceBetween,
-							children: [
-								Column(
-									crossAxisAlignment: CrossAxisAlignment.start,
-									children: [
-										Text(
-											'Data',
-											style: TextStyle(
-												fontSize: 18,
-												fontWeight: FontWeight.w600
-											)
-										),
-										Text(
-											'Valor total:',
-											style: TextStyle(
-												fontSize: 15,
-												color: Color(0xFF474747)
-											)
-										)
-									]
-								)
-							]
-						)
+					itemBuilder: (context, index) => HistoryItem(
+						date: getConvertedDate(historyList[index].date),
+						total: historyList[index].total,
 					),
 					separatorBuilder: (context, index) => const SizedBox(height: 8), 
 					itemCount: historyList.length

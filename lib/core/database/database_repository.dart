@@ -21,6 +21,15 @@ class DatabaseManager {
 		amount INTEGER NOT NULL
 		)
 		""");
+
+		await database.execute("""
+		CREATE TABLE IF NOT EXISTS $kCartHistoryTable (
+		id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+		date TEXT NOT NULL,
+		total TEXT NOT NULL,
+		totalItems INTEGER NOT NULL
+		)
+		""");
 	}
 
 	Future<int> delete ({

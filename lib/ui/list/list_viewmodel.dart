@@ -1,6 +1,6 @@
 import 'package:easy_cart/core/constants.dart';
 import 'package:easy_cart/core/managers/list_manager.dart';
-import 'package:easy_cart/core/models/shop_item.dart';
+import 'package:easy_cart/core/models/list_item.dart';
 import 'package:stacked/stacked.dart';
 
 class ListViewModel extends FutureViewModel{
