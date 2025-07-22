@@ -5,6 +5,16 @@ class FormatUtils {
 		return defaultFormat.formatString(value);
 	}
 
+	static String getPriceTotal(String value, int amount) {
+		double price = double.tryParse(value) ?? 0;
+		return (price * amount).toString();
+	}
+
+	static double formatedToDouble(String value, int amount) {
+		double price = double.tryParse(value) ?? 0;
+		return 0.0;
+	}
+
 	static CurrencyTextInputFormatter defaultFormat = CurrencyTextInputFormatter.currency(
 		locale: 'pt-br',
 		decimalDigits: 2,

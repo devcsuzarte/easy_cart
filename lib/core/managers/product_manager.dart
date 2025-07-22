@@ -9,7 +9,7 @@ class ProductManager {
 		final db = await DatabaseService().database;
 		final data = await db.query(tableName);
 		
-		if(data.isNotEmpty){
+		if (data.isNotEmpty) {
 			return data.map(
 				(e) => Product(
 					id: e['id'] as int,
@@ -65,6 +65,16 @@ class ProductManager {
 		return List.empty();	
 	}
 
+	Future<int> updateItem({
+		required int id,
+		required Product product
+	}) async {
+		final db = await DatabaseService().database;
+		return await db.rawUpdate(
+			'UPDATE $kProductTable SET amount = ?, price = ?, title = ? WHERE id = ?',
+  			[product.amount, product.price, product.title, id]
+		);
+	}
 
 	Future<int> cleanCart() async {
 		final db = await DatabaseService().database;
