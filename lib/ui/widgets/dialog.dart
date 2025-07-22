@@ -77,16 +77,26 @@ class DefaultDialog {
 					content: Text(message),
 					actions: [
 						TextButton(
-						onPressed: () {
-							Navigator.pop(context);
-						},
-							child: kDialogActionDefaultText,
+						onPressed: () => defaultFunction(),
+							child: Text(
+									buttonTitle,
+									style: TextStyle(
+											color: Colors.red
+									)
+							),
 						),
 						TextButton(
-						onPressed: () {
-							Navigator.pop(context);
-						},
-							child: kDialogActionDismissText,
+							onPressed: () {
+								if(alternativeFunction != null){
+									alternativeFunction!();
+								}
+							},
+							child: Text(
+								altFunctionMessage!,
+								style: TextStyle(
+										color: Colors.blue
+								),
+							),
 						)
 					]
 				);
