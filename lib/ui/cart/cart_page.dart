@@ -144,11 +144,45 @@ class _CartPageState extends State<CartPage> {
 								]
 							)
 						),
+
 						Expanded(
 							child: Padding(
 								padding: const EdgeInsets.all(15),
 								child: ListView.separated(
 									itemBuilder: (context, index) => CartItem(
+										onPress: () {
+											showModalBottomSheet(
+												context: context,
+												showDragHandle: true,
+												backgroundColor: Colors.white,
+												builder: (context) => ScanScreen(
+													isEditing: true,
+													product: products[index],
+												)
+											).whenComplete(() {
+													model.getData();
+												}
+											);
+										},
+										onHold: () {
+											DefaultDialog(
+												context: context, 
+												defaultFunction: (){
+													if (products[index].id != null) {
+														model.deleteProduct(products[index].id!);
+													}
+													Navigator.pop(context);
+												}, 
+												alternativeFunction: () {
+													Navigator.pop(context);
+												},
+												altFunctionMessage: 'Cancelar',
+												title: 'Confirmar exclusão', 
+												message: 'O item será deletado do carrinho', 
+												buttonTitle: 'Confirmar',
+												primaryButtonDestructive: true
+											).showDefaultDialog();
+										},
 										label: products[index].title,
 										amount: products[index].amount, 
 										price: products[index].price

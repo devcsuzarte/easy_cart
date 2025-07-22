@@ -39,8 +39,8 @@ class DefaultDialog {
 		showCupertinoDialog<void>(
 			context: context,
 			builder: (BuildContext context) => CupertinoAlertDialog(
-			title: kDialogTitleText,
-			content: kDialogContentText,
+			title: Text(title),
+			content: Text(message),
 			actions: <CupertinoDialogAction> [
 				CupertinoDialogAction(
 					isDestructiveAction: primaryButtonDestructive,

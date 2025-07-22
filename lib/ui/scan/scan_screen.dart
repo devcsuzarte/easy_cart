@@ -1,6 +1,7 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 
 import 'package:easy_cart/core/managers/product_manager.dart';
+import 'package:easy_cart/core/models/product.dart';
 import 'package:easy_cart/ui/scan/scan_viewmodel.dart';
 
 import 'package:flutter/material.dart';
@@ -10,8 +11,14 @@ import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class ScanScreen extends StatefulWidget {
+	final bool isEditing;
+	final Product? product;
 
-  const ScanScreen({super.key});
+	const ScanScreen({
+		super.key, 
+		this.isEditing = false, 
+		this.product
+	});
 
   @override
   State<ScanScreen> createState() => _ScanScreenState();
@@ -19,17 +26,17 @@ class ScanScreen extends StatefulWidget {
 
 class _ScanScreenState extends State<ScanScreen> {
 
-	final TextEditingController textLabelController = TextEditingController();
-	final TextEditingController textPriceController = TextEditingController();
+	final TextEditingController textLabelController = TextEditingController(), 
+		textPriceController = TextEditingController();
 	final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter.currency(
 		locale: 'pt-br',
 		decimalDigits: 2,
-		symbol: 'R\$',
-		inputDirection: InputDirection.left
+		symbol: 'R\$'
 	);
 
-	String label = ''; 
-	String price = '0,00'; 
+	String label = '',
+		price = '0,00',
+		total = '0,00'; 
 	int amount = 1;
 
   @override
@@ -37,7 +44,9 @@ class _ScanScreenState extends State<ScanScreen> {
 	
 	return ViewModelBuilder.reactive(
 		viewModelBuilder: () => ScanViewmodel(
-			productManager: context.read<ProductManager>()
+			productManager: context.read<ProductManager>(),
+			isEditing: widget.isEditing,
+			product: widget.product
 		),
 		onViewModelReady: (model) {
 			model
@@ -52,6 +61,11 @@ class _ScanScreenState extends State<ScanScreen> {
 					price = event.neu;
 					
 					textPriceController.text = _formatter.formatString(price);
+				} 
+			)
+			..total.onChange.listen(
+				(event) {
+					total = _formatter.formatString(event.neu);
 				} 
 			)
 			..amount.onChange.listen(
@@ -151,13 +165,7 @@ class _ScanScreenState extends State<ScanScreen> {
 									controller: textPriceController,
 									textAlign: TextAlign.end,
 									textAlignVertical: TextAlignVertical.center,
-									inputFormatters: <TextInputFormatter>[
-										CurrencyTextInputFormatter.currency(
-											locale: 'br',
-											decimalDigits: 2,
-											symbol: 'R\$ ',
-										),
-									],
+									inputFormatters: <TextInputFormatter>[_formatter],
 									keyboardType: TextInputType.number,
 									style: TextStyle(
 										fontSize: 28,
@@ -167,7 +175,12 @@ class _ScanScreenState extends State<ScanScreen> {
 										hintText: 'Preço',
 										border: InputBorder.none
 									),
-									onChanged: (value) => model.updatePriceFromView(value),
+									onChanged: (value) {
+										if(value.isEmpty) {
+											textPriceController.text = _formatter.formatString('0');
+										}
+										model.updateTotalPrice(value);
+									},
 								)
 							)
 						]
@@ -180,6 +193,7 @@ class _ScanScreenState extends State<ScanScreen> {
 						)
 					),
 
+					if(!widget.isEditing)
 					Row(
 						mainAxisAlignment: MainAxisAlignment.start,
 						children: [
@@ -221,14 +235,22 @@ class _ScanScreenState extends State<ScanScreen> {
 							foregroundColor: Colors.white
 						),
 						onPressed: () {
-							model.addItem(
-								title: textLabelController.text,
-								price: textPriceController.text
-							).whenComplete(
-								(){
-									Navigator.pop(context);
-								}
-							);
+							if (widget.isEditing) {
+								model.updateProduct(
+									textLabelController.text,
+									textPriceController.text, 
+									amount
+								);
+							} else {
+									model.addItem(
+									title: textLabelController.text,
+									price: textPriceController.text
+								).whenComplete(
+									() {
+										Navigator.pop(context);
+									}
+								);
+							}
 						}, 
 						child: Padding(
 							padding: const EdgeInsets.all(8.0),
@@ -243,7 +265,7 @@ class _ScanScreenState extends State<ScanScreen> {
 										),
 									),
 									Text(
-										_formatter.formatString(price),
+										_formatter.formatString(total),
 										style: TextStyle(
 											fontSize: 16,
 											fontWeight: FontWeight.bold

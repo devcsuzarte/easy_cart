@@ -2,20 +2,25 @@ import 'package:easy_cart/ui/widgets/container_default.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_cart/utils/format.dart';
 
-class CartItem extends StatelessWidget {
-  const CartItem({
-    super.key,
-    required this.label,
-    required this.amount,
-    required this.price});
+class CartItem extends StatelessWidget	{
+	const CartItem({
+		super.key,
+		required this.label,
+		required this.amount,
+		required this.price,
+		required this.onHold,
+		required this.onPress
+	});
 
-  final String label;
-  final int amount;
-  final String price;
+	final String label, price;
+	final int amount;
+	final Function onHold, onPress;
 
 	@override
 	Widget build(BuildContext context) {
 		return ContainerDefault(
+			onPress: () { onPress(); },
+			onHold: () { onHold(); },
 			child: Column(
 				crossAxisAlignment: CrossAxisAlignment.start,
 				children: [

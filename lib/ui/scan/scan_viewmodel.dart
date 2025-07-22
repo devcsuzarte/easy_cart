@@ -1,4 +1,5 @@
 import 'package:easy_cart/core/managers/product_manager.dart';
+import 'package:easy_cart/utils/format.dart';
 import 'package:easy_cart/utils/scanner.dart';
 import 'package:easy_cart/core/models/product.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,9 +9,12 @@ class ScanViewmodel extends FutureViewModel {
 
 	late ProductManager productManager;
 	final imagePicker = ImagePicker();
+	final bool isEditing;
+	final Product? product;
 
 	ReactiveValue<String> label = ReactiveValue(''), 
-		price = ReactiveValue('0,00'); 
+		price = ReactiveValue('0,00'),
+		total = ReactiveValue('0,00'); 
 	ReactiveValue<List<String>> labelsList = ReactiveValue(List.empty()), 
 		pricesList = ReactiveValue(List.empty());
 	ReactiveValue<int> labelSelected = ReactiveValue(0), 
@@ -18,12 +22,21 @@ class ScanViewmodel extends FutureViewModel {
 		amount = ReactiveValue(1);
 
 	ScanViewmodel({
-		required this.productManager
+		required this.productManager,
+		required this.isEditing,
+		this.product
 	});
 
 	@override
 	Future futureToRun() async {
-		await scanLabel();
+		if(isEditing && product != null) {
+			label.value = product!.title;
+			price.value = product!.price;
+			total.value = FormatUtils.getPriceTotal(product!.price, product!.amount);
+			notifyListeners();
+		} else {
+			await scanLabel();
+		}
 	}
 
 	Future<void> scanLabel() async {
@@ -61,6 +74,16 @@ class ScanViewmodel extends FutureViewModel {
 		}
 	}
 
+	void updateProduct(String title, String price, int amount) async {
+		Product updatedProduct = Product(
+			amount: amount, 
+			price: price, 
+			title: title
+		);
+
+		productManager.updateItem(id: product!.id!, product: updatedProduct);
+	}
+
 	void setLabel(){
 		label.value = labelsList.value.isNotEmpty ? labelsList.value.first : '';
 		notifyListeners();
@@ -68,11 +91,12 @@ class ScanViewmodel extends FutureViewModel {
 
 	void setPrice(){
 		price.value = pricesList.value.isNotEmpty ? pricesList.value.first : '0,00';
+		updateTotalPrice(price.value);
 		notifyListeners();
 	}
 
-	void updatePriceFromView(String newPrice){
-		price.value = newPrice;
+	void updateTotalPrice(String newPrice) {
+		total.value = FormatUtils.getPriceTotal(price.value, amount.value);
 		notifyListeners();
 	}
 
@@ -88,13 +112,15 @@ class ScanViewmodel extends FutureViewModel {
 
 	void increaseAmount(){
 		amount.value++;
+		updateTotalPrice(FormatUtils.getPriceTotal(price.value, amount.value));
 		notifyListeners();
 	}
 
 	void decreaseAmount(){
-		if(amount.value > 1){
+		if (amount.value > 1) {
 			amount.value--;
+			updateTotalPrice(FormatUtils.getPriceTotal(price.value, amount.value));
+			notifyListeners();
 		}
-		notifyListeners();
 	}
 }
