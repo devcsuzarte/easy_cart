@@ -28,7 +28,7 @@ class CartViewModel extends FutureViewModel{
 
 	Future<void> getData() async {
 		productsList.value = await productManager.fetchProducts(kProductTable);
-		total.value = PriceUtils.getTotalPrice(productsList.value);
+		total.value = PriceUtils.getTotalCartPrice(productsList.value);
 		notifyListeners();
 	}
 

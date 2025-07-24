@@ -5,6 +5,8 @@ import 'package:easy_cart/core/models/list_item.dart';
 import 'package:easy_cart/ui/list/list_add_item.dart';
 import 'package:easy_cart/ui/list/list_viewmodel.dart';
 import 'package:easy_cart/ui/widgets/container_default.dart';
+import 'package:easy_cart/ui/widgets/dialog.dart';
+import 'package:easy_cart/ui/widgets/empty.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
@@ -19,6 +21,36 @@ class ListPage extends StatefulWidget {
 class _ListPageState extends State<ListPage> {
 	List<ListItem> shopList = List.empty(growable: true);
 
+	void _showCleanListDialog(Function action) {
+		DefaultDialog(
+			context: context,
+			defaultFunction: () {
+				action();
+				Navigator.pop(context);
+			},
+			primaryButtonDestructive: true,
+			altFunctionMessage: 'Cancelar',
+			title: 'Deseja limpar a lista', 
+			message: 'Todos os itens serão removidos', 
+			buttonTitle: 'Confirmar'
+		).showDefaultDialog();
+	}
+
+	void _showDeleteItemDialog(Function action) {
+		DefaultDialog(
+			context: context,
+			defaultFunction: () {
+				action();
+				Navigator.pop(context);
+			},
+			primaryButtonDestructive: true,
+			altFunctionMessage: 'Cancelar',
+			title: 'Confirmar exclusão', 
+			message: 'O item será deletado da sua lista', 
+			buttonTitle: 'Confirmar'
+		).showDefaultDialog();
+	}
+
 	@override
 	Widget build(BuildContext context) {
 		return ViewModelBuilder<ListViewModel>.reactive(
@@ -31,6 +63,7 @@ class _ListPageState extends State<ListPage> {
 				);
 			} ,
 			builder: (context, model, widget) => Scaffold(
+			backgroundColor: Colors.white,
 			appBar: AppBar(
 				backgroundColor: Colors.green,
 				foregroundColor: Colors.white,
@@ -42,7 +75,9 @@ class _ListPageState extends State<ListPage> {
 				),
 				actions: [
 					IconButton(
-						onPressed: () {}, 
+						onPressed: () {
+							_showCleanListDialog(() { model.cleanList(); });
+						}, 
 						icon: Icon(Icons.delete)
 					),
 					IconButton(
@@ -62,10 +97,17 @@ class _ListPageState extends State<ListPage> {
 					),
 				],
 			),
-			body: Padding(
+			body: (!model.isBusy && shopList.isNotEmpty) ? Padding(
 				padding: const EdgeInsets.all(15.0),
 				child: ListView.separated(
 					itemBuilder: (context, index) => ContainerDefault(
+						onHold: () {
+							_showDeleteItemDialog(() {
+								if (shopList[index].id != null) {
+									model.deleteItem(shopList[index].id!);
+								}
+							});
+						},
 						child: Row(
 							mainAxisAlignment: MainAxisAlignment.spaceBetween,
 							children: [
@@ -100,6 +142,11 @@ class _ListPageState extends State<ListPage> {
 					separatorBuilder: (context, index) => const SizedBox(height: 8), 
 					itemCount: shopList.length
 					)
+				) : Align(
+					child: Empty(
+						imgUrl: 'assets/list.png',
+						title: 'Lista de compras vazia',
+					),
 				)
 			)
 		);

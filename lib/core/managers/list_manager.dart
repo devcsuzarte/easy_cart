@@ -6,7 +6,7 @@ class ListManager {
 	
 	Future<List<ListItem>> fetchAll(String tableName) async {
 		final db = await DatabaseService().database;
-		final data = await db.query(tableName);
+		final data = await db.query(tableName, orderBy: "title ASC");
 		
 		return data.map(
 			(e) => ListItem(

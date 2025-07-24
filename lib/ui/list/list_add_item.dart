@@ -42,12 +42,9 @@ class _ListAddItemState extends State<ListAddItem> {
 						child: TextFormField(
 							controller: textTitleController,
 							textAlign: TextAlign.start,
+							textCapitalization: TextCapitalization.sentences,
 							maxLines: 2,
 							minLines: 1,
-							style: TextStyle(
-								fontSize: 24,
-								fontWeight: FontWeight.bold
-							),
 							decoration: ThemeUtils.defaultInputTheme()
 						)
 					),
@@ -75,6 +72,10 @@ class _ListAddItemState extends State<ListAddItem> {
 								widget.model.addItem(
 									title: textTitleController.text,
 									amount: amount
+								).whenComplete(
+									() {
+										Navigator.pop(context);
+									}
 								);
 							}, 
 							child: SizedBox(

@@ -1,3 +1,4 @@
+import 'package:easy_cart/ui/widgets/empty.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
@@ -145,9 +146,9 @@ class _CartPageState extends State<CartPage> {
 							)
 						),
 
-						Expanded(
+						(!model.isBusy && products.isNotEmpty) ? Expanded(
 							child: Padding(
-								padding: const EdgeInsets.all(15),
+								padding: const EdgeInsets.symmetric(horizontal:  15),
 								child: ListView.separated(
 									itemBuilder: (context, index) => CartItem(
 										onPress: () {
@@ -172,9 +173,6 @@ class _CartPageState extends State<CartPage> {
 														model.deleteProduct(products[index].id!);
 													}
 													Navigator.pop(context);
-												}, 
-												alternativeFunction: () {
-													Navigator.pop(context);
 												},
 												altFunctionMessage: 'Cancelar',
 												title: 'Confirmar exclusão', 
@@ -191,6 +189,11 @@ class _CartPageState extends State<CartPage> {
 									itemCount: products.length,
 								)
 							)
+						) : Align(
+							child: Empty(
+								imgUrl: 'assets/cart.png',
+								title: 'Clique no botão abaixo para adicionar itens ao carrinho',
+							),
 						)
 					]
 				)

@@ -1,5 +1,5 @@
 import 'package:easy_cart/core/managers/product_manager.dart';
-import 'package:easy_cart/utils/format.dart';
+import 'package:easy_cart/utils/price.dart';
 import 'package:easy_cart/utils/scanner.dart';
 import 'package:easy_cart/core/models/product.dart';
 import 'package:image_picker/image_picker.dart';
@@ -32,7 +32,8 @@ class ScanViewmodel extends FutureViewModel {
 		if(isEditing && product != null) {
 			label.value = product!.title;
 			price.value = product!.price;
-			total.value = FormatUtils.getPriceTotal(product!.price, product!.amount);
+			amount.value = product!.amount;
+			total.value = PriceUtils.getPriceTotal(product!.price, product!.amount);
 			notifyListeners();
 		} else {
 			await scanLabel();
@@ -74,7 +75,7 @@ class ScanViewmodel extends FutureViewModel {
 		}
 	}
 
-	void updateProduct(String title, String price, int amount) async {
+	Future<void> updateProduct(String title, String price, int amount) async {
 		Product updatedProduct = Product(
 			amount: amount, 
 			price: price, 
@@ -96,7 +97,7 @@ class ScanViewmodel extends FutureViewModel {
 	}
 
 	void updateTotalPrice(String newPrice) {
-		total.value = FormatUtils.getPriceTotal(price.value, amount.value);
+		total.value = PriceUtils.getPriceTotal(price.value, amount.value);
 		notifyListeners();
 	}
 
@@ -112,14 +113,14 @@ class ScanViewmodel extends FutureViewModel {
 
 	void increaseAmount(){
 		amount.value++;
-		updateTotalPrice(FormatUtils.getPriceTotal(price.value, amount.value));
+		updateTotalPrice(PriceUtils.getPriceTotal(price.value, amount.value));
 		notifyListeners();
 	}
 
 	void decreaseAmount(){
 		if (amount.value > 1) {
 			amount.value--;
-			updateTotalPrice(FormatUtils.getPriceTotal(price.value, amount.value));
+			updateTotalPrice(PriceUtils.getPriceTotal(price.value, amount.value));
 			notifyListeners();
 		}
 	}

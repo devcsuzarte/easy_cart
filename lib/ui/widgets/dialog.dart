@@ -39,15 +39,10 @@ class DefaultDialog {
 		showCupertinoDialog<void>(
 			context: context,
 			builder: (BuildContext context) => CupertinoAlertDialog(
-			title: Text(title),
-			content: Text(message),
-			actions: <CupertinoDialogAction> [
-				CupertinoDialogAction(
-					isDestructiveAction: primaryButtonDestructive,
-					child: Text(buttonTitle),
-					onPressed: () => defaultFunction(),
-					),
-					if(alternativeFunction != null && altFunctionMessage != null)
+				title: Text(title),
+				content: Text(message),
+				actions: <CupertinoDialogAction> [
+					if(altFunctionMessage != null)
 					CupertinoDialogAction(
 						isDefaultAction: altButtonDestructive,
 						child: Text(
@@ -59,8 +54,15 @@ class DefaultDialog {
 						onPressed: () {
 							if(alternativeFunction != null){
 								alternativeFunction!();
-							}			
+							}
+							Navigator.pop(context);
 						}
+					),
+					
+					CupertinoDialogAction(
+						isDestructiveAction: primaryButtonDestructive,
+						child: Text(buttonTitle),
+						onPressed: () => defaultFunction(),
 					)
 				]
 			)

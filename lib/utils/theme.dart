@@ -4,11 +4,7 @@ class ThemeUtils {
 	static InputDecoration defaultInputTheme() => InputDecoration(
 		filled: true,
 		fillColor: Colors.white,
-		hintText: 'Ex: Feijão',
-		hintStyle: TextStyle(
-			color: Colors.grey,
-			fontSize: 16
-		),
+		hintText: 'Ex: Arroz Branco',
 		contentPadding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
 		border: defaultInputBorder(),
 		enabledBorder: defaultInputBorder(),

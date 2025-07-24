@@ -3,6 +3,7 @@ import 'package:easy_cart/core/models/history.dart';
 import 'package:easy_cart/ui/history/history_item.dart';
 import 'package:easy_cart/ui/history/history_viewmodel.dart';
 import 'package:easy_cart/ui/widgets/container_default.dart';
+import 'package:easy_cart/ui/widgets/empty.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +40,7 @@ class _HistoryPageState extends State<HistoryPage> {
 				);
 			} ,
 			builder: (context, model, widget) => Scaffold(
+				backgroundColor: Colors.white,
 			appBar: AppBar(
 				backgroundColor: Colors.green,
 				foregroundColor: Colors.white,
@@ -49,7 +51,7 @@ class _HistoryPageState extends State<HistoryPage> {
 					)
 				)
 			),
-			body: Padding(
+			body: (!model.isBusy && historyList.isNotEmpty) ? Padding(
 				padding: const EdgeInsets.all(15.0),
 				child: ListView.separated(
 					itemBuilder: (context, index) => HistoryItem(
@@ -58,6 +60,14 @@ class _HistoryPageState extends State<HistoryPage> {
 					),
 					separatorBuilder: (context, index) => const SizedBox(height: 8), 
 					itemCount: historyList.length
+					)
+				) : Padding(
+					padding: const EdgeInsets.symmetric(horizontal: 25.0),
+						child: Align(
+						child: Empty(
+							imgUrl: 'assets/history.png',
+							title: 'Nenhum histórico encontrado'
+						)
 					)
 				)
 			)

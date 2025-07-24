@@ -1,6 +1,6 @@
 import 'package:easy_cart/ui/widgets/container_default.dart';
+import 'package:easy_cart/utils/price.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_cart/utils/format.dart';
 
 class CartItem extends StatelessWidget	{
 	const CartItem({
@@ -44,7 +44,7 @@ class CartItem extends StatelessWidget	{
 								)
 							),
 							Text(
-								FormatUtils.getDisplayPrice(price),
+								PriceUtils.getDisplayPrice(price),
 								style:  TextStyle(
 									fontSize: 18,
 									fontWeight: FontWeight.bold,

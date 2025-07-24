@@ -240,9 +240,13 @@ class _ScanScreenState extends State<ScanScreen> {
 									textLabelController.text,
 									textPriceController.text, 
 									amount
+								).whenComplete(
+									() {
+										Navigator.pop(context);
+									}
 								);
 							} else {
-									model.addItem(
+								model.addItem(
 									title: textLabelController.text,
 									price: textPriceController.text
 								).whenComplete(

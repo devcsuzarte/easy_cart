@@ -1,5 +1,5 @@
 import 'package:easy_cart/ui/widgets/container_default.dart';
-import 'package:easy_cart/utils/format.dart';
+import 'package:easy_cart/utils/price.dart';
 import 'package:flutter/material.dart';
 
 class HistoryItem extends StatelessWidget {
@@ -25,7 +25,7 @@ class HistoryItem extends StatelessWidget {
 						)
 					),
 					Text(
-						FormatUtils.getDisplayPrice(total),
+						PriceUtils.getDisplayPrice(total),
 						style:  TextStyle(
 							fontSize: 18,
 							fontWeight: FontWeight.bold,

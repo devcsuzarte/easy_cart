@@ -7,7 +7,7 @@ class ProductManager {
 	
 	Future<List<Product>> fetchProducts(String tableName) async {
 		final db = await DatabaseService().database;
-		final data = await db.query(tableName);
+		final data = await db.query(tableName, orderBy: "id ASC");
 		
 		if (data.isNotEmpty) {
 			return data.map(
@@ -50,7 +50,7 @@ class ProductManager {
 
 	Future<List<Cart>> fetchHistory() async {
 		final db = await DatabaseService().database;
-		final data = await db.query(kCartHistoryTable);
+		final data = await db.query(kCartHistoryTable, orderBy: "date DESC");
 
 		if (data.isNotEmpty) {
 			return data.map(
