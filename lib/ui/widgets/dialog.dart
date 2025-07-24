@@ -76,6 +76,7 @@ class DefaultDialog {
               title: Text(title),
               content: Text(message),
               actions: [
+                if(altFunctionMessage != null)
                 TextButton(
                   onPressed: () {
                     if (alternativeFunction != null) {
@@ -95,7 +96,7 @@ class DefaultDialog {
                   child: Text(
                       buttonTitle,
                       style: TextStyle(
-                          color: Colors.red
+                          color: primaryButtonDestructive ? Colors.red : Colors.blue
                       )
                   ),
                 ),

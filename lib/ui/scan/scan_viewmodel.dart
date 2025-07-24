@@ -12,6 +12,7 @@ class ScanViewmodel extends FutureViewModel {
 	final bool isEditing;
 	final Product? product;
 
+	ReactiveValue<ScanState> state = ReactiveValue(ScanState.none);
 	ReactiveValue<String> label = ReactiveValue(''), 
 		price = ReactiveValue('0,00'),
 		total = ReactiveValue('0,00'); 
@@ -61,6 +62,17 @@ class ScanViewmodel extends FutureViewModel {
 		required String title,
 		required String price
 	}) async {
+
+		if (title.isEmpty) {
+			setState(ScanState.labelEmpty);
+			return;
+		}
+
+		if (price.isEmpty) {
+			setState(ScanState.priceEmpty);
+			return;
+		}
+
 		Product newProduct = Product(
 			amount: amount.value, 
 			price: price, 
@@ -69,7 +81,9 @@ class ScanViewmodel extends FutureViewModel {
 		try {
 			runBusyFuture(
 				productManager.addProduct(product: newProduct)
-			);
+			).whenComplete((){
+				setState(ScanState.addSucceeded);
+			});
 		} catch (e){
 			throw Exception('Not able to add product: $e');
 		}
@@ -85,12 +99,12 @@ class ScanViewmodel extends FutureViewModel {
 		productManager.updateItem(id: product!.id!, product: updatedProduct);
 	}
 
-	void setLabel(){
+	void setLabel() {
 		label.value = labelsList.value.isNotEmpty ? labelsList.value.first : '';
 		notifyListeners();
 	}
 
-	void setPrice(){
+	void setPrice() {
 		price.value = pricesList.value.isNotEmpty ? pricesList.value.first : '0,00';
 		updateTotalPrice(price.value);
 		notifyListeners();
@@ -117,17 +131,30 @@ class ScanViewmodel extends FutureViewModel {
 		setPrice();
 	}
 
-	void increaseAmount(){
+	void increaseAmount() {
 		amount.value++;
 		updateTotalPrice(PriceUtils.getPriceTotal(price.value, amount.value));
 		notifyListeners();
 	}
 
-	void decreaseAmount(){
+	void decreaseAmount() {
 		if (amount.value > 1) {
 			amount.value--;
 			updateTotalPrice(PriceUtils.getPriceTotal(price.value, amount.value));
 			notifyListeners();
 		}
 	}
+
+	void setState(ScanState newState) {
+		state.value = newState;
+		notifyListeners();
+	}
+}
+
+enum ScanState {
+	none,
+	unknowError,
+	labelEmpty,
+	priceEmpty,
+	addSucceeded
 }

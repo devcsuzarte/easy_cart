@@ -3,6 +3,7 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:easy_cart/core/managers/product_manager.dart';
 import 'package:easy_cart/core/models/product.dart';
 import 'package:easy_cart/ui/scan/scan_viewmodel.dart';
+import 'package:easy_cart/ui/widgets/dialog.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -39,6 +40,37 @@ class _ScanScreenState extends State<ScanScreen> {
 		total = '0,00'; 
 	int amount = 1;
 
+	void listener(ScanState  state) {
+		if(state == ScanState.labelEmpty) {
+			DefaultDialog(
+					context: context,
+					defaultFunction: () {
+						Navigator.pop(context);
+					},
+					title: 'Erro ao adicionar item',
+					message: 'Necessário inserir o nome do produto',
+					buttonTitle: 'Entendi'
+			).showDefaultDialog();
+			return;
+		}
+		if(state == ScanState.priceEmpty) {
+			DefaultDialog(
+					context: context,
+					defaultFunction: () {
+						Navigator.pop(context);
+					},
+					title: 'Erro ao adicionar item',
+					message: 'Necessário inserir o preço do produto',
+					buttonTitle: 'Entendi'
+			).showDefaultDialog();
+			return;
+		}
+		if(state == ScanState.addSucceeded) {
+			Navigator.pop(context);
+			return;
+		}
+	}
+
   @override
   Widget build(BuildContext context) {
 	
@@ -50,6 +82,9 @@ class _ScanScreenState extends State<ScanScreen> {
 		),
 		onViewModelReady: (model) {
 			model
+			..state.onChange.listen(
+					(state) => listener(state.neu)
+			)
 			..label.onChange.listen(
 				(event) {
 					label = event.neu;
@@ -248,10 +283,6 @@ class _ScanScreenState extends State<ScanScreen> {
 								model.addItem(
 									title: textLabelController.text,
 									price: textPriceController.text
-								).whenComplete(
-									() {
-										Navigator.pop(context);
-									}
 								);
 							}
 						}, 

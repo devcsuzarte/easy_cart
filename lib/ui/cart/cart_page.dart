@@ -1,6 +1,7 @@
 import 'package:easy_cart/ui/widgets/empty.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:easy_cart/core/models/product.dart';
@@ -83,116 +84,121 @@ class _CartPageState extends State<CartPage> {
 						size: 35
 					)
 				),
-				body: Column(
-					children: [
-						Container(
-							color: Color(0xFFEFF1F4),
-							padding: const EdgeInsets.fromLTRB(15, 24, 15, 15),
-							child: Row(
-								mainAxisAlignment: MainAxisAlignment.spaceBetween,
-								children: [
-									ContainerDefault(
-										onPress: (){
-											Navigator.pushNamed(
-												context, 
-												'/list'
-											);
-										},
-										child: Column(
-											children: [
-												Icon(
-													Icons.list,
-													size: 30,
-													color: Colors.green,
-												),
-												const SizedBox(height: 5),
-												Text(
-													'Lista de Compras',
-													style: TextStyle(
-														fontWeight: FontWeight.bold
-													),
-												)
-											]
-										)
-									),
-									ContainerDefault(
-										onPress: (){
-											Navigator.pushNamed(
-												context, 
-												'/history'
-											);
-										},
-										child: Column(
-											children: [
-												Icon(
-													Icons.history,
-													size: 30,
-													color: Colors.green,
-												),
-												const SizedBox(height: 5),
-												Text(
-													'Compras Anteriores',
-													style: TextStyle(
-														fontWeight: FontWeight.bold
-													)
-												)
-											]
-										)
-									)
-								]
-							)
-						),
+				body: Skeletonizer(
+					enabled: model.isBusy,
+				  child: Column(
+				  	children: [
+				  		Container(
+				  			color: Color(0xFFEFF1F4),
+				  			padding: const EdgeInsets.fromLTRB(15, 24, 15, 15),
+				  			child: Row(
+				  				mainAxisAlignment: MainAxisAlignment.spaceBetween,
+				  				children: [
+				  					ContainerDefault(
+				  						onPress: (){
+				  							Navigator.pushNamed(
+				  								context,
+				  								'/list'
+				  							);
+				  						},
+				  						child: Column(
+				  							children: [
+				  								Icon(
+				  									Icons.list,
+				  									size: 30,
+				  									color: Colors.green,
+				  								),
+				  								const SizedBox(height: 5),
+				  								Text(
+				  									'Lista de Compras',
+				  									style: TextStyle(
+				  										fontWeight: FontWeight.bold
+				  									),
+				  								)
+				  							]
+				  						)
+				  					),
+				  					ContainerDefault(
+				  						onPress: (){
+				  							Navigator.pushNamed(
+				  								context,
+				  								'/history'
+				  							);
+				  						},
+				  						child: Column(
+				  							children: [
+				  								Icon(
+				  									Icons.history,
+				  									size: 30,
+				  									color: Colors.green,
+				  								),
+				  								const SizedBox(height: 5),
+				  								Text(
+				  									'Compras Anteriores',
+				  									style: TextStyle(
+				  										fontWeight: FontWeight.bold
+				  									)
+				  								)
+				  							]
+				  						)
+				  					)
+				  				]
+				  			)
+				  		),
 
-						(!model.isBusy && products.isNotEmpty) ? Expanded(
-							child: Padding(
-								padding: const EdgeInsets.all(15),
-								child: ListView.separated(
-									itemBuilder: (context, index) => CartItem(
-										onPress: () {
-											showModalBottomSheet(
-												context: context,
-												showDragHandle: true,
-												backgroundColor: Colors.white,
-												builder: (context) => ScanScreen(
-													isEditing: true,
-													product: products[index],
-												)
-											).whenComplete(() {
-													model.getData();
-												}
-											);
-										},
-										onHold: () {
-											DefaultDialog(
-												context: context, 
-												defaultFunction: (){
-													if (products[index].id != null) {
-														model.deleteProduct(products[index].id!);
-													}
-													Navigator.pop(context);
-												},
-												altFunctionMessage: 'Cancelar',
-												title: 'Confirmar exclusão', 
-												message: 'O item será deletado do carrinho', 
-												buttonTitle: 'Confirmar',
-												primaryButtonDestructive: true
-											).showDefaultDialog();
-										},
-										label: products[index].title,
-										amount: products[index].amount, 
-										price: products[index].price
-									),
-									separatorBuilder: (context, index) => const SizedBox(height: 10),
-									itemCount: products.length,
-								)
-							)
-						) : Align(
-							child: Empty(
-								imgUrl: 'assets/cart.png',
-								title: 'Clique no botão abaixo para adicionar itens ao carrinho',
-							),
-						)
-					]
+				  		(!model.isBusy && products.isNotEmpty) ? Expanded(
+				  			child: Padding(
+				  				padding: const EdgeInsets.all(15),
+				  				child: ListView.separated(
+				  					itemBuilder: (context, index) => Skeleton.leaf(
+				  					  child: CartItem(
+				  					  	onPress: () {
+				  					  		showModalBottomSheet(
+				  					  			context: context,
+				  					  			showDragHandle: true,
+				  					  			backgroundColor: Colors.white,
+				  					  			builder: (context) => ScanScreen(
+				  					  				isEditing: true,
+				  					  				product: products[index],
+				  					  			)
+				  					  		).whenComplete(() {
+				  					  				model.getData();
+				  					  			}
+				  					  		);
+				  					  	},
+				  					  	onHold: () {
+				  					  		DefaultDialog(
+				  					  			context: context,
+				  					  			defaultFunction: (){
+				  					  				if (products[index].id != null) {
+				  					  					model.deleteProduct(products[index].id!);
+				  					  				}
+				  					  				Navigator.pop(context);
+				  					  			},
+				  					  			altFunctionMessage: 'Cancelar',
+				  					  			title: 'Confirmar exclusão',
+				  					  			message: 'O item será deletado do carrinho',
+				  					  			buttonTitle: 'Confirmar',
+				  					  			primaryButtonDestructive: true
+				  					  		).showDefaultDialog();
+				  					  	},
+				  					  	label: products[index].title,
+				  					  	amount: products[index].amount,
+				  					  	price: products[index].price
+				  					  ),
+				  					),
+				  					separatorBuilder: (context, index) => const SizedBox(height: 10),
+				  					itemCount: products.length,
+				  				)
+				  			)
+				  		) : Align(
+				  			child: Empty(
+				  				imgUrl: 'assets/cart.png',
+				  				title: 'Clique no botão abaixo para adicionar itens ao carrinho',
+				  			),
+				  		)
+				  	]
+				  ),
 				)
 			)
 		);

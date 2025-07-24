@@ -9,6 +9,7 @@ import 'package:easy_cart/ui/widgets/dialog.dart';
 import 'package:easy_cart/ui/widgets/empty.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:stacked/stacked.dart';
 
 class ListPage extends StatefulWidget {
@@ -97,52 +98,57 @@ class _ListPageState extends State<ListPage> {
 					),
 				],
 			),
-			body: (!model.isBusy && shopList.isNotEmpty) ? Padding(
-				padding: const EdgeInsets.all(15.0),
-				child: ListView.separated(
-					itemBuilder: (context, index) => ContainerDefault(
-						onHold: () {
-							_showDeleteItemDialog(() {
-								if (shopList[index].id != null) {
-									model.deleteItem(shopList[index].id!);
-								}
-							});
-						},
-						child: Row(
-							mainAxisAlignment: MainAxisAlignment.spaceBetween,
-							children: [
-								Column(
-									crossAxisAlignment: CrossAxisAlignment.start,
-									children: [
-										Text(
-											shopList[index].title,
-											style: TextStyle(
-												fontSize: 18,
-												fontWeight: FontWeight.w600
-											)
-										),
-										Text(
-											'Quantidade: ${shopList[index].amount}',
-											style: TextStyle(
-												fontSize: 15,
-												color: Color(0xFF474747)
-											)
-										)
-									]
-								),
-								Checkbox(
-									value: shopList[index].selected, 
-									onChanged: (value) {
-										model.toggleSelected(id: shopList[index].id!, newStatus: value!);
-									}
-								)
-							]
-						)
-					),
-					separatorBuilder: (context, index) => const SizedBox(height: 8), 
-					itemCount: shopList.length
-					)
-				) : Align(
+			body: (!model.isBusy && shopList.isNotEmpty) ? Skeletonizer(
+				enabled: model.isBusy,
+			  child: Padding(
+			  	padding: const EdgeInsets.all(15.0),
+			  	child: ListView.separated(
+			  		itemBuilder: (context, index) => Skeleton.leaf(
+			  		  child: ContainerDefault(
+			  		  	onHold: () {
+			  		  		_showDeleteItemDialog(() {
+			  		  			if (shopList[index].id != null) {
+			  		  				model.deleteItem(shopList[index].id!);
+			  		  			}
+			  		  		});
+			  		  	},
+			  		  	child: Row(
+			  		  		mainAxisAlignment: MainAxisAlignment.spaceBetween,
+			  		  		children: [
+			  		  			Column(
+			  		  				crossAxisAlignment: CrossAxisAlignment.start,
+			  		  				children: [
+			  		  					Text(
+			  		  						shopList[index].title,
+			  		  						style: TextStyle(
+			  		  							fontSize: 18,
+			  		  							fontWeight: FontWeight.w600
+			  		  						)
+			  		  					),
+			  		  					Text(
+			  		  						'Quantidade: ${shopList[index].amount}',
+			  		  						style: TextStyle(
+			  		  							fontSize: 15,
+			  		  							color: Color(0xFF474747)
+			  		  						)
+			  		  					)
+			  		  				]
+			  		  			),
+			  		  			Checkbox(
+			  		  				value: shopList[index].selected,
+			  		  				onChanged: (value) {
+			  		  					model.toggleSelected(id: shopList[index].id!, newStatus: value!);
+			  		  				}
+			  		  			)
+			  		  		]
+			  		  	)
+			  		  ),
+			  		),
+			  		separatorBuilder: (context, index) => const SizedBox(height: 8),
+			  		itemCount: shopList.length
+			  		)
+			  	),
+			) : Align(
 					child: Empty(
 						imgUrl: 'assets/list.png',
 						title: 'Lista de compras vazia',

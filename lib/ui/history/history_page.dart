@@ -7,6 +7,7 @@ import 'package:easy_cart/ui/widgets/empty.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:stacked/stacked.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -51,17 +52,22 @@ class _HistoryPageState extends State<HistoryPage> {
 					)
 				)
 			),
-			body: (!model.isBusy && historyList.isNotEmpty) ? Padding(
-				padding: const EdgeInsets.all(15.0),
-				child: ListView.separated(
-					itemBuilder: (context, index) => HistoryItem(
-						date: getConvertedDate(historyList[index].date),
-						total: historyList[index].total,
-					),
-					separatorBuilder: (context, index) => const SizedBox(height: 8), 
-					itemCount: historyList.length
-					)
-				) : Padding(
+			body: (!model.isBusy && historyList.isNotEmpty) ? Skeletonizer(
+				enabled: model.isBusy,
+			  child: Padding(
+			  	padding: const EdgeInsets.all(15.0),
+			  	child: ListView.separated(
+			  		itemBuilder: (context, index) => Skeleton.leaf(
+			  		  child: HistoryItem(
+			  		  	date: getConvertedDate(historyList[index].date),
+			  		  	total: historyList[index].total,
+			  		  ),
+			  		),
+			  		separatorBuilder: (context, index) => const SizedBox(height: 8),
+			  		itemCount: historyList.length
+			  		)
+			  	),
+			) : Padding(
 					padding: const EdgeInsets.symmetric(horizontal: 25.0),
 						child: Align(
 						child: Empty(
