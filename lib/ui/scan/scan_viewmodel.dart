@@ -96,6 +96,12 @@ class ScanViewmodel extends FutureViewModel {
 		notifyListeners();
 	}
 
+	void onPriceChanged(String newPrice) {
+		price.value = newPrice;
+		total.value = PriceUtils.getPriceTotal(price.value, amount.value);
+		notifyListeners();
+	}
+
 	void updateTotalPrice(String newPrice) {
 		total.value = PriceUtils.getPriceTotal(price.value, amount.value);
 		notifyListeners();

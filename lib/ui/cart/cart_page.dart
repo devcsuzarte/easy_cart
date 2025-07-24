@@ -52,9 +52,6 @@ class _CartPageState extends State<CartPage> {
 								defaultFunction: (){
 									model.cleanCartList();
 									Navigator.pop(context);
-								}, 
-								alternativeFunction: () {
-									Navigator.pop(context);
 								},
 								altFunctionMessage: 'Cancelar',
 								title: 'Confirmar exclusão', 
@@ -148,7 +145,7 @@ class _CartPageState extends State<CartPage> {
 
 						(!model.isBusy && products.isNotEmpty) ? Expanded(
 							child: Padding(
-								padding: const EdgeInsets.symmetric(horizontal:  15),
+								padding: const EdgeInsets.all(15),
 								child: ListView.separated(
 									itemBuilder: (context, index) => CartItem(
 										onPress: () {

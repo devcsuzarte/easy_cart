@@ -172,14 +172,13 @@ class _ScanScreenState extends State<ScanScreen> {
 										fontWeight: FontWeight.bold
 									),
 									decoration: InputDecoration(
-										hintText: 'Preço',
 										border: InputBorder.none
 									),
 									onChanged: (value) {
 										if(value.isEmpty) {
 											textPriceController.text = _formatter.formatString('0');
 										}
-										model.updateTotalPrice(value);
+										model.onPriceChanged(value);
 									},
 								)
 							)
