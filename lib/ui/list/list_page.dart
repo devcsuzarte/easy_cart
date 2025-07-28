@@ -87,6 +87,7 @@ class _ListPageState extends State<ListPage> {
 							showModalBottomSheet(
 								context: context,
 								showDragHandle: true,
+								isScrollControlled: true,
 								backgroundColor: Colors.white,
 								builder: (context) 
 									=> ListAddItem(model: model)

@@ -1,11 +1,12 @@
 import 'dart:io';
+import 'package:easy_cart/utils/price.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:easy_cart/utils/text.dart';
 
 class Scanner {
 	final List<String> _possibleLables = [];
-  	final List<String> _possiblePrices = [];
+  	final List<double> _possiblePrices = [];
 
 	Future<void> processScan(XFile labelImage) async {
 		final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
@@ -20,7 +21,7 @@ class Scanner {
 					_possibleLables.add(line.text);
 				}
 				if(TextUtils.isPriceValid(line.text)) {
-					_possiblePrices.add(TextUtils.getConvertedPrice(line.text));
+					_possiblePrices.add(PriceUtils.formatedToDouble(line.text));
 				}
 			}
 		}
@@ -30,7 +31,7 @@ class Scanner {
 		return _possibleLables;
 	}
 
-	List<String> getPrices(){
+	List<double> getPrices(){
 		return _possiblePrices;
 	}
 }

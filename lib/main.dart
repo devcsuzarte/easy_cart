@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
 				)
 			],
 			child: MaterialApp(
+				debugShowCheckedModeBanner: false,
 				initialRoute: '/',
 				routes: {
 					'/': (context) => const CartPage(),

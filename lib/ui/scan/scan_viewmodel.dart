@@ -16,8 +16,8 @@ class ScanViewmodel extends FutureViewModel {
 	ReactiveValue<String> label = ReactiveValue(''), 
 		price = ReactiveValue('0,00'),
 		total = ReactiveValue('0,00'); 
-	ReactiveValue<List<String>> labelsList = ReactiveValue(List.empty()), 
-		pricesList = ReactiveValue(List.empty());
+	ReactiveValue<List<String>> labelsList = ReactiveValue(List.empty());
+	ReactiveValue<List<double>>	pricesList = ReactiveValue(List.empty());
 	ReactiveValue<int> labelSelected = ReactiveValue(0), 
 		priceSelected = ReactiveValue(0),
 		amount = ReactiveValue(1);
@@ -105,7 +105,7 @@ class ScanViewmodel extends FutureViewModel {
 	}
 
 	void setPrice() {
-		price.value = pricesList.value.isNotEmpty ? pricesList.value.first : '0,00';
+		price.value = pricesList.value.isNotEmpty ? (pricesList.value.first).toStringAsFixed(2) : '0,00';
 		updateTotalPrice(price.value);
 		notifyListeners();
 	}

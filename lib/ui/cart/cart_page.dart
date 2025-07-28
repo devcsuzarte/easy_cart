@@ -55,7 +55,7 @@ class _CartPageState extends State<CartPage> {
 									Navigator.pop(context);
 								},
 								altFunctionMessage: 'Cancelar',
-								title: 'Confirmar exclusão', 
+								title: 'Finalizar carrinho', 
 								message: 'Todos os itens serão deletados do seu carrinho', 
 								buttonTitle: 'Confirmar',
 								primaryButtonDestructive: true
@@ -70,6 +70,7 @@ class _CartPageState extends State<CartPage> {
 						showModalBottomSheet(
 							context: context,
 							showDragHandle: true,
+							isScrollControlled: true,
 							backgroundColor: Colors.white,
 							builder: (context) => ScanScreen()
 						).whenComplete( (){
@@ -156,7 +157,6 @@ class _CartPageState extends State<CartPage> {
 				  					  		showModalBottomSheet(
 				  					  			context: context,
 				  					  			showDragHandle: true,
-				  					  			backgroundColor: Colors.white,
 				  					  			builder: (context) => ScanScreen(
 				  					  				isEditing: true,
 				  					  				product: products[index],

@@ -31,11 +31,16 @@ class PriceUtils {
 	}
 
 	static double formatedToDouble(String value) {
+		String cleanedValue = removeCurrency(value);
+		return double.tryParse(cleanedValue) ?? 0.0;
+	}
+
+	static String removeCurrency(String value) {
 		String cleanedValue = value.
-			replaceAll(RegExp(r'R\$'), '')
+			replaceAll(RegExp(r'[^0-9.,]'), '')
 			.replaceFirst(',', '.')
 			.replaceAll(',', '');
-		return double.tryParse(cleanedValue) ?? 0.0;
+		return cleanedValue;
 	}
 
 	static CurrencyTextInputFormatter defaultFormat = CurrencyTextInputFormatter.currency(

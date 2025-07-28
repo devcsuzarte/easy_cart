@@ -107,210 +107,219 @@ class _ScanScreenState extends State<ScanScreen> {
 				(event) => amount = event.neu
 			);
 		},
-		builder: (context, model, child) => Padding(
-			padding: const EdgeInsets.all(14.0),
-			child: Column(
-				crossAxisAlignment: CrossAxisAlignment.start,
-				mainAxisAlignment: MainAxisAlignment.start,
-				children: [
-					Flexible(
-						child: TextFormField(
-							controller: textLabelController,
-							textAlign: TextAlign.start,
-							maxLines: 2,
-							minLines: 1,
-							style: TextStyle(
-								fontSize: 24,
-								fontWeight: FontWeight.bold
-							),
-							decoration: InputDecoration(
-								hintText: 'TITULO DO PRODUTO',
-								border: InputBorder.none
-							)
-						)
-					),
-					const SizedBox(height: 5),
-					Row(
-						mainAxisAlignment: MainAxisAlignment.spaceBetween,
-						children: [
-							Container(
-								padding: const EdgeInsets.all(5),
-								decoration: BoxDecoration(
-									color: Color(0xFFF8F9FA),
-									borderRadius: BorderRadius.circular(50)
-								),
-								child: Row(
-									mainAxisAlignment: MainAxisAlignment.center,
+		builder: (context, model, child) => InkWell(
+			enableFeedback: false,
+			highlightColor: Colors.transparent,
+			splashColor: Colors.transparent,
+			onTap: () {
+				FocusScope.of(context).unfocus();
+			},
+				  child: Container(
+									padding: const EdgeInsets.all(14.0),
+									height: MediaQuery.of(context).size.height * 0.7,
+									child: Column(
+									crossAxisAlignment: CrossAxisAlignment.start,
+									mainAxisAlignment: MainAxisAlignment.start,
 									children: [
-										GestureDetector(
-											onTap: (){
-												model.decreaseAmount();
-											},
-											child: Container(
-												padding: const EdgeInsets.all(8),
-												decoration: BoxDecoration(
-													color: Colors.white,
-													shape: BoxShape.circle,
-													border:  Border.all(
-														color: Color(0xFFDEE2E6)
-													)
+										Flexible(
+											child: TextFormField(
+												controller: textLabelController,
+												textAlign: TextAlign.start,
+												maxLines: 2,
+												minLines: 1,
+												style: TextStyle(
+													fontSize: 24,
+													fontWeight: FontWeight.bold
 												),
-												child: Icon(
-													Icons.remove,
-													color: Colors.black,
-													size: 30
+												decoration: InputDecoration(
+													hintText: 'Nome do produto',
+													border: InputBorder.none
 												)
 											)
 										),
-										const SizedBox(width: 18),
-										Text(
-											'${amount}x',
-											style: TextStyle(
-												fontSize: 30,
-												fontWeight: FontWeight.bold
-											),
-										),
-										const SizedBox(width: 18),
-										GestureDetector(
-											onTap: (){
-												model.increaseAmount();
-											},
-											child: Container(
-												padding: const EdgeInsets.all(8),
-												decoration: BoxDecoration(
-													color: Colors.white,
-													shape: BoxShape.circle,
-													border: Border.all(
-														color: Color(0xFFDEE2E6)
+										const SizedBox(height: 5),
+										Row(
+											mainAxisAlignment: MainAxisAlignment.spaceBetween,
+											children: [
+												Container(
+													padding: const EdgeInsets.all(5),
+													decoration: BoxDecoration(
+														color: Color(0xFFF8F9FA),
+														borderRadius: BorderRadius.circular(50)
+													),
+													child: Row(
+														mainAxisAlignment: MainAxisAlignment.center,
+														children: [
+															GestureDetector(
+																onTap: (){
+																	model.decreaseAmount();
+																},
+																child: Container(
+																	padding: const EdgeInsets.all(8),
+																	decoration: BoxDecoration(
+																		color: Colors.white,
+																		shape: BoxShape.circle,
+																		border:  Border.all(
+																			color: Color(0xFFDEE2E6)
+																		)
+																	),
+																	child: Icon(
+																		Icons.remove,
+																		color: Colors.black,
+																		size: 30
+																	)
+																)
+															),
+															const SizedBox(width: 18),
+															Text(
+																'${amount}x',
+																style: TextStyle(
+																	fontSize: 30,
+																	fontWeight: FontWeight.bold
+																),
+															),
+															const SizedBox(width: 18),
+															GestureDetector(
+																onTap: (){
+																	model.increaseAmount();
+																},
+																child: Container(
+																	padding: const EdgeInsets.all(8),
+																	decoration: BoxDecoration(
+																		color: Colors.white,
+																		shape: BoxShape.circle,
+																		border: Border.all(
+																			color: Color(0xFFDEE2E6)
+																		)
+																	),
+																	child: Icon(
+																		Icons.add,
+																		color: Colors.black,
+																		size: 30
+																	)
+																)
+															)
+														]
 													)
 												),
-												child: Icon(
-													Icons.add,
-													color: Colors.black,
-													size: 30
+				  
+												Flexible(
+													child: TextFormField(
+														controller: textPriceController,
+														textAlign: TextAlign.end,
+														textAlignVertical: TextAlignVertical.center,
+														inputFormatters: <TextInputFormatter>[_formatter],
+														keyboardType: TextInputType.number,
+														style: TextStyle(
+															fontSize: 28,
+															fontWeight: FontWeight.bold
+														),
+														decoration: InputDecoration(
+															border: InputBorder.none
+														),
+														onChanged: (value) {
+															if(value.isEmpty) {
+																textPriceController.text = _formatter.formatString('0');
+															}
+															model.onPriceChanged(value);
+														},
+													)
+												)
+											]
+										),
+										
+										Padding(
+											padding: const EdgeInsets.symmetric(vertical: 24),
+											child: Divider(
+												color: Colors.grey.shade200,
+											)
+										),
+				  
+										if(!widget.isEditing)
+										Row(
+											mainAxisAlignment: MainAxisAlignment.start,
+											children: [
+												Column(
+													crossAxisAlignment: CrossAxisAlignment.start,
+													children: [
+														TextButton(
+															onPressed: () {
+																model.refreshLabel();
+															}, 
+															child: Text(
+																'Atualizar etiqueta',
+																style: TextStyle(
+																	color: Colors.blue,
+																	fontWeight: FontWeight.bold
+																)
+															)
+														),
+														TextButton(
+															onPressed: () {
+																model.refreshPrice();
+															}, 
+															child: Text(
+																'Atualizar preço',
+																style: TextStyle(
+																	color: Colors.blue,
+																	fontWeight: FontWeight.bold
+																)
+															)
+														)
+													]
+												)
+											]
+										),
+										const SizedBox(height: 24.0),
+										TextButton(
+											style: TextButton.styleFrom(
+												backgroundColor: Colors.green,
+												foregroundColor: Colors.white
+											),
+											onPressed: () {
+												if (widget.isEditing) {
+													model.updateProduct(
+														textLabelController.text,
+														textPriceController.text, 
+														amount
+													).whenComplete(
+														() {
+															Navigator.pop(context);
+														}
+													);
+												} else {
+													model.addItem(
+														title: textLabelController.text,
+														price: textPriceController.text
+													);
+												}
+											}, 
+											child: Padding(
+												padding: const EdgeInsets.all(8.0),
+												child: Row(
+													mainAxisAlignment: MainAxisAlignment.spaceBetween,
+													children: [
+														Text(
+															'Adicionar ($amount)',
+															style: TextStyle(
+																fontSize: 16,
+																fontWeight: FontWeight.bold
+															),
+														),
+														Text(
+															_formatter.formatString(total),
+															style: TextStyle(
+																fontSize: 16,
+																fontWeight: FontWeight.bold
+															)
+														)
+													]
 												)
 											)
 										)
 									]
-								)
-							),
-
-							Flexible(
-								child: TextFormField(
-									controller: textPriceController,
-									textAlign: TextAlign.end,
-									textAlignVertical: TextAlignVertical.center,
-									inputFormatters: <TextInputFormatter>[_formatter],
-									keyboardType: TextInputType.number,
-									style: TextStyle(
-										fontSize: 28,
-										fontWeight: FontWeight.bold
-									),
-									decoration: InputDecoration(
-										border: InputBorder.none
-									),
-									onChanged: (value) {
-										if(value.isEmpty) {
-											textPriceController.text = _formatter.formatString('0');
-										}
-										model.onPriceChanged(value);
-									},
-								)
-							)
-						]
-					),
-					
-					Padding(
-						padding: const EdgeInsets.symmetric(vertical: 24),
-						child: Divider(
-							color: Colors.grey.shade200,
-						)
-					),
-
-					if(!widget.isEditing)
-					Row(
-						mainAxisAlignment: MainAxisAlignment.start,
-						children: [
-							Column(
-								crossAxisAlignment: CrossAxisAlignment.start,
-								children: [
-									TextButton(
-										onPressed: () {
-											model.refreshLabel();
-										}, 
-										child: Text(
-											'Atualizar etiqueta',
-											style: TextStyle(
-												color: Colors.blue,
-												fontWeight: FontWeight.bold
-											)
-										)
-									),
-									TextButton(
-										onPressed: () {
-											model.refreshPrice();
-										}, 
-										child: Text(
-											'Atualizar preço',
-											style: TextStyle(
-												color: Colors.blue,
-												fontWeight: FontWeight.bold
-											)
-										)
 									)
-								]
-							)
-						]
-					),
-					const SizedBox(height: 24.0),
-					TextButton(
-						style: TextButton.styleFrom(
-							backgroundColor: Colors.green,
-							foregroundColor: Colors.white
-						),
-						onPressed: () {
-							if (widget.isEditing) {
-								model.updateProduct(
-									textLabelController.text,
-									textPriceController.text, 
-									amount
-								).whenComplete(
-									() {
-										Navigator.pop(context);
-									}
-								);
-							} else {
-								model.addItem(
-									title: textLabelController.text,
-									price: textPriceController.text
-								);
-							}
-						}, 
-						child: Padding(
-							padding: const EdgeInsets.all(8.0),
-							child: Row(
-								mainAxisAlignment: MainAxisAlignment.spaceBetween,
-								children: [
-									Text(
-										'Adicionar ($amount)',
-										style: TextStyle(
-											fontSize: 16,
-											fontWeight: FontWeight.bold
-										),
-									),
-									Text(
-										_formatter.formatString(total),
-										style: TextStyle(
-											fontSize: 16,
-											fontWeight: FontWeight.bold
-										)
-									)
-								]
-							)
-						)
-					)
-				]
-			)
-		));
+				  ),
+				));
 	}
 }
