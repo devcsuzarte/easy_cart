@@ -40,6 +40,8 @@ class _ScanScreenState extends State<ScanScreen> {
 		total = '0,00'; 
 	int amount = 1;
 
+	void dismiss() => Navigator.pop(context);
+
 	void listener(ScanState  state) {
 		if(state == ScanState.labelEmpty) {
 			DefaultDialog(
@@ -283,9 +285,7 @@ class _ScanScreenState extends State<ScanScreen> {
 														textPriceController.text, 
 														amount
 													).whenComplete(
-														() {
-															Navigator.pop(context);
-														}
+														() { dismiss(); }
 													);
 												} else {
 													model.addItem(

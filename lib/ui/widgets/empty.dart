@@ -11,13 +11,16 @@ class Empty extends StatelessWidget {
 
 	@override
 	Widget build(BuildContext context) {
-		return Padding(
+		return Container(
+			constraints: BoxConstraints(
+				maxHeight: 300
+			),
 			padding: const EdgeInsets.all(30),
 			child: Column(
 			mainAxisAlignment: MainAxisAlignment.center,
 			crossAxisAlignment: CrossAxisAlignment.center,
 			children: [
-				Image.asset(imgUrl),
+				Flexible(child: Image.asset(imgUrl)),
 				const SizedBox(height: 15),
 				Text(
 					title,

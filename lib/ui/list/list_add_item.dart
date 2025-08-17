@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:easy_cart/core/models/list_item.dart';
 import 'package:easy_cart/ui/list/list_viewmodel.dart';
 import 'package:easy_cart/ui/widgets/stepper.dart';
 import 'package:easy_cart/utils/theme.dart';
@@ -24,6 +23,8 @@ class _ListAddItemState extends State<ListAddItem> {
   Widget build(BuildContext context) {
 	final TextEditingController textTitleController = TextEditingController();
 	int amount = 1;
+
+	void dismiss() => Navigator.pop(context);
 
 	return InkWell(
 		enableFeedback: false,
@@ -81,9 +82,7 @@ class _ListAddItemState extends State<ListAddItem> {
 										title: textTitleController.text,
 										amount: amount
 									).whenComplete(
-										() {
-											Navigator.pop(context);
-										}
+										() { dismiss(); }
 									);
 								}, 
 								child: SizedBox(

@@ -2,7 +2,6 @@ import 'package:easy_cart/core/managers/product_manager.dart';
 import 'package:easy_cart/core/models/history.dart';
 import 'package:easy_cart/ui/history/history_item.dart';
 import 'package:easy_cart/ui/history/history_viewmodel.dart';
-import 'package:easy_cart/ui/widgets/container_default.dart';
 import 'package:easy_cart/ui/widgets/empty.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -70,9 +69,9 @@ class _HistoryPageState extends State<HistoryPage> {
 			) : Padding(
 					padding: const EdgeInsets.symmetric(horizontal: 25.0),
 						child: Align(
-						child: Empty(
-							imgUrl: 'assets/history.png',
-							title: 'Nenhum histórico encontrado'
+							child: Empty(
+								imgUrl: 'assets/history.png',
+								title: 'Nenhum histórico encontrado'
 						)
 					)
 				)

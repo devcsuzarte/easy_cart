@@ -80,7 +80,7 @@ class _CartPageState extends State<CartPage> {
 					},
 					tooltip: "Run action",
 					child: Icon(
-						Icons.add_shopping_cart_rounded,
+						Icons.add_shopping_cart,
 						color: Colors.white,
 						size: 35
 					)
@@ -191,12 +191,14 @@ class _CartPageState extends State<CartPage> {
 				  					itemCount: products.length,
 				  				)
 				  			)
-				  		) : Align(
-				  			child: Empty(
-				  				imgUrl: 'assets/cart.png',
-				  				title: 'Clique no botão abaixo para adicionar itens ao carrinho',
-				  			),
-				  		)
+				  		) : Expanded(
+							child: Align(
+								child: Empty(
+									imgUrl: 'assets/cart.png',
+									title: 'Clique no botão abaixo para adicionar itens ao carrinho',
+								),
+							),
+						)
 				  	]
 				  ),
 				)
