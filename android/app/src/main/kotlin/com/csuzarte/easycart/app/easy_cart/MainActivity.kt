@@ -1,4 +1,4 @@
-package com.csuzarte.easycart.app.easy_cart
+package com.csuzarte.easycart.app
 
 import io.flutter.embedding.android.FlutterActivity
 

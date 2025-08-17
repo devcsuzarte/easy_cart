@@ -25,6 +25,29 @@ class _CartPageState extends State<CartPage> {
 	List<Product> products = List.empty();
 	String total = '0.0';
 
+	void onCleanCartPressed(Function onConfirm) {
+		if (products.isEmpty) {
+			DefaultDialog(
+				context: context, 
+				defaultFunction: () { onConfirm(); },
+				title: 'Sua lista está vazia', 
+				message: 'Clique no carrinho para adicionar itens', 
+				buttonTitle: 'Entendi',
+			).showDefaultDialog();
+			return;
+		}
+
+		DefaultDialog(
+			context: context, 
+			defaultFunction: () { onConfirm(); },
+			altFunctionMessage: 'Cancelar',
+			title: 'Finalizar carrinho', 
+			message: 'Todos os itens serão deletados do seu carrinho', 
+			buttonTitle: 'Confirmar',
+			primaryButtonDestructive: true
+		).showDefaultDialog();
+	}
+
 	@override
 	Widget build(BuildContext context) {
 		return ViewModelBuilder<CartViewModel>.reactive(
@@ -48,18 +71,10 @@ class _CartPageState extends State<CartPage> {
 					child: CartAppbar(
 						total: total,
 						onConfirm: () {
-							DefaultDialog(
-								context: context, 
-								defaultFunction: (){
-									model.cleanCartList();
-									Navigator.pop(context);
-								},
-								altFunctionMessage: 'Cancelar',
-								title: 'Finalizar carrinho', 
-								message: 'Todos os itens serão deletados do seu carrinho', 
-								buttonTitle: 'Confirmar',
-								primaryButtonDestructive: true
-							).showDefaultDialog();
+							onCleanCartPressed(() {
+								model.cleanCartList();
+								Navigator.pop(context);
+							});
 						}
 					)
 				),
@@ -119,7 +134,8 @@ class _CartPageState extends State<CartPage> {
 				  							]
 				  						)
 				  					),
-				  					ContainerDefault(
+									const SizedBox(width: 8),				  					
+									ContainerDefault(
 				  						onPress: (){
 				  							Navigator.pushNamed(
 				  								context,

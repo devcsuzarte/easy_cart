@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    namespace = "com.csuzarte.easycart.app.easy_cart"
+    namespace = "com.csuzarte.easycart.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
     defaultConfig {
-        applicationId = "com.csuzarte.easycart.app.easy_cart"
+        applicationId = "com.csuzarte.easycart.app"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

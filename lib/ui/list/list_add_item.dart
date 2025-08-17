@@ -19,15 +19,15 @@ class ListAddItem extends StatefulWidget {
 }
 
 class _ListAddItemState extends State<ListAddItem> {
-  @override
-  Widget build(BuildContext context) {
 	final TextEditingController textTitleController = TextEditingController();
 	int amount = 1;
 
+  @override
+  Widget build(BuildContext context) {
+	
 	void dismiss() => Navigator.pop(context);
 
 	return InkWell(
-		enableFeedback: false,
 		highlightColor: Colors.transparent,
 		splashColor: Colors.transparent,
 		onTap: () {
