@@ -23,6 +23,17 @@ class _ListPageState extends State<ListPage> {
 	List<ListItem> shopList = List.empty(growable: true);
 
 	void _showCleanListDialog(Function action) {
+
+		if (shopList.isEmpty) {
+			DefaultDialog(
+				context: context, 
+				defaultFunction: () { Navigator.pop(context); },
+				title: 'Sua lista está vazia', 
+				message: 'Clique no botão abaixo para adicionar itens', 
+				buttonTitle: 'Entendi',
+			).showDefaultDialog();
+			return;
+		}
 		DefaultDialog(
 			context: context,
 			defaultFunction: () {

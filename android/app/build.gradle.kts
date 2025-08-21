@@ -1,9 +1,18 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    // O plugin Flutter deve vir depois
     id("dev.flutter.flutter-gradle-plugin")
 }
+
+val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
+
 
 android {
     namespace = "com.csuzarte.easycart.app"
@@ -29,6 +38,14 @@ android {
     }
 
     buildTypes {
+		signingConfigs {
+			create("release") {
+				keyAlias = keystoreProperties["keyAlias"] as String
+				keyPassword = keystoreProperties["keyPassword"] as String
+				storeFile = keystoreProperties["storeFile"]?.let { file(it) }
+				storePassword = keystoreProperties["storePassword"] as String
+			}
+		}
         release {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -36,9 +53,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            // ⚠️ não é recomendado usar "debug" para assinar release
-            // substitui depois por tua própria chave release
             signingConfig = signingConfigs.getByName("debug")
+			signingConfig = signingConfigs.getByName("release")
         }
         debug {
             isMinifyEnabled = false

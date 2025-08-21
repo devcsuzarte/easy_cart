@@ -42,7 +42,7 @@ class ScanViewmodel extends FutureViewModel {
 	}
 
 	Future<void> scanLabel() async {
-		final pickedFile = await imagePicker.pickImage(source: ImageSource.camera);
+		final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
 		final Scanner scanner = Scanner();
 		try {
 			await scanner.processScan(pickedFile!);

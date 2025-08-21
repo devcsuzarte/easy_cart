@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:stacked/stacked.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -25,7 +26,15 @@ class _HistoryPageState extends State<HistoryPage> {
 			int.parse(date)
 		);
 
-		return DateFormat.yMMMd().format(convertedDate);
+		return DateFormat.yMMMd('pt').format(convertedDate);
+	}
+
+	@override
+	void initState() {
+		WidgetsBinding.instance.addPostFrameCallback((_) {
+			initializeDateFormatting(Localizations.localeOf(context).languageCode, null);
+		});
+		super.initState();
 	}
 
   	@override
