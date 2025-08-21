@@ -13,7 +13,6 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
-
 android {
     namespace = "com.csuzarte.easycart.app"
     compileSdk = flutter.compileSdkVersion
@@ -38,14 +37,14 @@ android {
     }
 
     buildTypes {
-		signingConfigs {
-			create("release") {
-				keyAlias = keystoreProperties["keyAlias"] as String
-				keyPassword = keystoreProperties["keyPassword"] as String
-				storeFile = keystoreProperties["storeFile"]?.let { file(it) }
-				storePassword = keystoreProperties["storePassword"] as String
-			}
-		}
+        signingConfigs {
+            create("release") {
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storeFile = keystoreProperties["storeFile"]?.let { file(it) }
+                storePassword = keystoreProperties["storePassword"] as String
+            }
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -53,8 +52,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
-			signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName("release")
         }
         debug {
             isMinifyEnabled = false
@@ -69,8 +67,9 @@ dependencies {
     // Google Material
     implementation("com.google.android.material:material:1.12.0")
 
-    // Play Core (necessário para FlutterPlayStoreSplitApplication / deferred components)
-    implementation("com.google.android.play:core:1.10.3")
+    // ✅ Replaced deprecated Play Core with Play Feature Delivery
+    implementation("com.google.android.play:feature-delivery:2.1.0")
+    implementation("com.google.android.play:feature-delivery-ktx:2.1.0")
 
     // ML Kit Text Recognition (Latin e outros idiomas)
     implementation("com.google.mlkit:text-recognition:16.0.0")
