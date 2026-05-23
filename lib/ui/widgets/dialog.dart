@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:easy_cart/core/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +47,7 @@ class DefaultDialog {
                     child: Text(
                       altFunctionMessage!,
                       style: TextStyle(
-                          color: Colors.blue
+                          color: kAccentColor
                       ),
                     ),
                     onPressed: () {
@@ -96,7 +97,7 @@ class DefaultDialog {
                   child: Text(
                       buttonTitle,
                       style: TextStyle(
-                          color: primaryButtonDestructive ? Colors.red : Colors.blue
+                          color: primaryButtonDestructive ? kDestructiveColor : kAccentColor
                       )
                   ),
                 ),
