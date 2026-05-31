@@ -191,7 +191,7 @@ class _HistoryPageState extends State<HistoryPage> {
 							child: Align(
 								alignment: Alignment.center,
 								child: Empty(
-									imgUrl: 'assets/history.png',
+									imgUrl: 'assets/history.svg',
 									title: 'Nenhum histórico encontrado',
 									subtitle: 'Suas compras concluídas aparecerão aqui.',
 								),

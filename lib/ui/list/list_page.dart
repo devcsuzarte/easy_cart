@@ -275,7 +275,7 @@ class _ListPageState extends State<ListPage> {
 										child: Align(
 											alignment: Alignment.center,
 											child: Empty(
-												imgUrl: 'assets/list.png',
+												imgUrl: 'assets/list.svg',
 												title: 'Comece sua lista',
 												subtitle: 'Anote o que precisa comprar — riscamos os itens automaticamente quando você adicionar no carrinho.',
 											),

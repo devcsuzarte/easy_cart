@@ -179,7 +179,6 @@ class _WelcomePage extends StatelessWidget {
 					),
 					const SizedBox(height: 32),
 
-					// Botão "Começar"
 					SizedBox(
 						width: double.infinity,
 						child: ElevatedButton(
@@ -199,25 +198,14 @@ class _WelcomePage extends StatelessWidget {
 							),
 						),
 					),
-					const SizedBox(height: 10),
 
-					// Link "Já tenho conta"
-					TextButton(
-						onPressed: onNext,
-						child: Text(
-							'Já tenho conta',
-							style: TypographyStyle.body().copyWith(color: kMutedColor),
-						),
-					),
 					const SizedBox(height: 8),
-
 				],
 			),
 		);
 	}
 }
 
-/// Colagem de tiles flutuantes usada na tela de boas-vindas.
 class _FloatingTiles extends StatelessWidget {
 	const _FloatingTiles();
 
@@ -305,8 +293,6 @@ class _FloatingTiles extends StatelessWidget {
 		);
 	}
 }
-
-// ─── Tela 1 — Como funciona ──────────────────────────────────────────────────
 
 class _HowPage extends StatelessWidget {
 	const _HowPage({required this.onNext});

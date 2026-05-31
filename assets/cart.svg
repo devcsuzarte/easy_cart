@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+  
+  <ellipse cx="120" cy="128" rx="104" ry="92" fill="#FFF1EA"></ellipse>
+
+  
+  <path d="M104 36 L156 36 L156 100 L148 96 L140 100 L132 96 L124 100 L116 96 L108 100 L104 96 Z" fill="#FFFFFF" stroke="#1B1814" stroke-width="3" stroke-linejoin="round"></path>
+  <path d="M114 54 h32 M114 66 h24 M114 78 h28" stroke="#E04E25" stroke-width="3" stroke-linecap="round"></path>
+
+  
+  <path d="M62 92 L196 92 L182 158 L82 158 Z" fill="#FFFFFF" stroke="#1B1814" stroke-width="3" stroke-linejoin="round"></path>
+
+  
+  <path d="M88 92 L92 158 M114 92 L116 158 M140 92 L138 158 M166 92 L162 158&#xA;           M72 114 L188 114 M76 136 L184 136" stroke="#1B1814" stroke-width="1.8" stroke-linecap="round" opacity=".4"></path>
+
+  
+  <path d="M58 76 L42 76 L34 56" stroke="#1B1814" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+  <path d="M50 92 L62 92" stroke="#1B1814" stroke-width="3.5" stroke-linecap="round"></path>
+
+  
+  <circle cx="98" cy="186" r="12" fill="#FFFFFF" stroke="#1B1814" stroke-width="3"></circle>
+  <circle cx="98" cy="186" r="4" fill="#1B1814"></circle>
+  <circle cx="170" cy="186" r="12" fill="#FFFFFF" stroke="#1B1814" stroke-width="3"></circle>
+  <circle cx="170" cy="186" r="4" fill="#1B1814"></circle>
+
+  
+  <path d="M98 174 L106 158 M170 174 L162 158" stroke="#1B1814" stroke-width="3" stroke-linecap="round"></path>
+
+  
+  <circle cx="58" cy="42" r="14" fill="#E04E25"></circle>
+  <text x="58" y="47" font-family="ui-sans-serif, system-ui" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">R$</text>
+  <path d="M64 50 L74 60" stroke="#1B1814" stroke-width="2.5" stroke-linecap="round"></path>
+</svg>

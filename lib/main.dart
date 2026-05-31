@@ -20,7 +20,6 @@ void main() async {
 }
 
 ThemeData _buildTheme(Brightness brightness) {
-	final isDark = brightness == Brightness.dark;
 	return ThemeData(
 		colorScheme: ColorScheme.fromSeed(
 			seedColor: kAccentColor,
@@ -29,8 +28,8 @@ ThemeData _buildTheme(Brightness brightness) {
 		textTheme: GoogleFonts.plusJakartaSansTextTheme(
 			ThemeData(brightness: brightness).textTheme,
 		),
-		scaffoldBackgroundColor: isDark ? const Color(0xFF14110D) : kBgColor,
-		useMaterial3: true,
+		scaffoldBackgroundColor: kBgColor,
+		useMaterial3: true
 	);
 }
 
@@ -68,7 +67,6 @@ class MyApp extends StatelessWidget {
 				title: 'Carrinho Fácil',
 				themeMode: ThemeMode.system,
 				theme: _buildTheme(Brightness.light),
-				darkTheme: _buildTheme(Brightness.dark),
 			)
 		);
 	}
