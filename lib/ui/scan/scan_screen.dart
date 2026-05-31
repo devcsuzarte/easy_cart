@@ -94,7 +94,6 @@ class _ScanScreenState extends State<ScanScreen> {
 				..amount.onChange.listen((event) => amount = event.neu);
 			},
 			builder: (context, model, child) => InkWell(
-				enableFeedback: false,
 				highlightColor: Colors.transparent,
 				splashColor: Colors.transparent,
 				onTap: () { FocusScope.of(context).unfocus(); },
@@ -108,12 +107,9 @@ class _ScanScreenState extends State<ScanScreen> {
 						child: Column(
 							crossAxisAlignment: CrossAxisAlignment.start,
 							children: [
-
-								// ── 1. Header: tile + chip + campo nome ──────────
 								Row(
 									crossAxisAlignment: CrossAxisAlignment.start,
 									children: [
-										// Tile 88×88 — placeholder com ícone etiqueta
 										Container(
 											width: 88,
 											height: 88,
@@ -132,7 +128,6 @@ class _ScanScreenState extends State<ScanScreen> {
 											child: Column(
 												crossAxisAlignment: CrossAxisAlignment.start,
 												children: [
-													// Chip contextual
 													Container(
 														padding: const EdgeInsets.symmetric(
 															horizontal: 10,
@@ -156,7 +151,6 @@ class _ScanScreenState extends State<ScanScreen> {
 														),
 													),
 													const SizedBox(height: 10),
-													// Label semântico + campo de texto do produto
 													Text('produto', style: TypographyStyle.labelXs()),
 													TextFormField(
 														controller: textLabelController,
@@ -178,9 +172,9 @@ class _ScanScreenState extends State<ScanScreen> {
 										),
 									],
 								),
+
 								const SizedBox(height: 16),
 
-								// ── 2. Preço unitário ─────────────────────────────
 								Container(
 									padding: const EdgeInsets.symmetric(
 										horizontal: 16,
@@ -221,7 +215,6 @@ class _ScanScreenState extends State<ScanScreen> {
 								),
 								const SizedBox(height: 12),
 
-								// ── 3. Quantidade ─────────────────────────────────
 								Container(
 									padding: const EdgeInsets.symmetric(
 										horizontal: 16,
@@ -267,7 +260,6 @@ class _ScanScreenState extends State<ScanScreen> {
 								),
 								const SizedBox(height: 8),
 
-								// ── 4. Chips de refresh (apenas não-edição) ────────
 								if (!widget.isEditing)
 									Row(
 										children: [
@@ -292,11 +284,9 @@ class _ScanScreenState extends State<ScanScreen> {
 
 								const SizedBox(height: 16),
 
-								// ── 5. Botões de ação ──────────────────────────────
 								if (!widget.isEditing)
 									Row(
 										children: [
-											// Outra foto — reabre câmera
 											Expanded(
 												child: OutlinedButton(
 													style: OutlinedButton.styleFrom(
@@ -317,8 +307,9 @@ class _ScanScreenState extends State<ScanScreen> {
 													),
 												),
 											),
+
 											const SizedBox(width: 12),
-											// Adicionar · R$ total
+
 											Expanded(
 												flex: 2,
 												child: ElevatedButton(
@@ -386,7 +377,6 @@ class _ScanScreenState extends State<ScanScreen> {
 	}
 }
 
-/// Botão circular do stepper — visual inline gerenciado pelo ViewModel.
 class _StepperButton extends StatelessWidget {
 	const _StepperButton({
 		required this.icon,

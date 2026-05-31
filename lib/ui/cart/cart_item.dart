@@ -19,7 +19,6 @@ class CartItem extends StatelessWidget {
 	final int amount;
 	final Function onHold, onPress;
 
-	/// Cor do tile determinada pelo primeiro caractere do label.
 	Color _tileColor() {
 		const palette = [
 			kAccentSoftColor,

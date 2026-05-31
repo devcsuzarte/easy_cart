@@ -2,6 +2,7 @@ import 'package:easy_cart/core/constants.dart';
 import 'package:easy_cart/core/sizing.dart';
 import 'package:easy_cart/core/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class Empty extends StatelessWidget {
 	const Empty({
@@ -39,7 +40,9 @@ class Empty extends StatelessWidget {
 							borderRadius: BorderRadius.circular(AppRadius.xl),
 							child: Padding(
 								padding: const EdgeInsets.all(24),
-								child: Image.asset(imgUrl, fit: BoxFit.contain),
+								child: SvgPicture.asset(
+									imgUrl
+								),
 							),
 						),
 					),
