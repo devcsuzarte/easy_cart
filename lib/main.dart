@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
 					'/':            (context) => const CartPage(),
 					'/list':        (context) => const ListPage(),
 					'/history':     (context) => const HistoryPage(),
-					'/onboarding':  (context) => const OnboardingPage(),
+					'/onboarding':  (context) => const OnboardingPage()
 				},
 				title: 'Carrinho Fácil',
 				themeMode: ThemeMode.system,
