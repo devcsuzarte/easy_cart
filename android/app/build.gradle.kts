@@ -61,25 +61,22 @@ android {
 }
 
 dependencies {
-    // AndroidX multidex (evita limite de 65k métodos)
     implementation("androidx.multidex:multidex:2.0.1")
 
-    // Google Material
     implementation("com.google.android.material:material:1.12.0")
 
-    // ✅ Replaced deprecated Play Core with Play Feature Delivery
     implementation("com.google.android.play:feature-delivery:2.1.0")
     implementation("com.google.android.play:feature-delivery-ktx:2.1.0")
 
-    // ML Kit Text Recognition (Latin e outros idiomas)
     implementation("com.google.mlkit:text-recognition:16.0.0")
     implementation("com.google.mlkit:text-recognition-chinese:16.0.0")
     implementation("com.google.mlkit:text-recognition-devanagari:16.0.0")
     implementation("com.google.mlkit:text-recognition-japanese:16.0.0")
     implementation("com.google.mlkit:text-recognition-korean:16.0.0")
+}
 
-    // TensorFlow Lite GPU (se realmente precisar de aceleração de GPU)
-    implementation("org.tensorflow:tensorflow-lite-gpu:2.12.0")
+configurations.all {
+    exclude(group = "org.tensorflow", module = "tensorflow-lite-gpu")
 }
 
 flutter {
