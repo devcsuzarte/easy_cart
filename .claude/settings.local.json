@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(flutter analyze *)",
-      "Bash(dart analyze *)"
+      "Bash(dart analyze *)",
+      "Read(//Users/devcsuzarte/development/flutter/bin/cache/**)",
+      "Bash(touch /Users/devcsuzarte/development/flutter/bin/cache/engine.stamp)"
     ]
   }
 }

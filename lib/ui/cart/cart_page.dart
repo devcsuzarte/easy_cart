@@ -203,17 +203,14 @@ class _CartPageState extends State<CartPage> {
                         ),
                       )
                     else
-                      Center(
-                        child: Expanded(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Empty(
-                              imgUrl: 'assets/cart.svg',
-                              title: 'Comece sua lista',
-                              subtitle:
-                                  'Tire foto da etiqueta — a gente lê nome e preço automaticamente.'
-                            )
-                          )
+                      const Expanded(
+                        child: Center(
+                          child: Empty(
+                            imgUrl: 'assets/cart.svg',
+                            title: 'Comece sua lista',
+                            subtitle:
+                                'Tire foto da etiqueta — a gente lê nome e preço automaticamente.',
+                          ),
                         ),
                       )
                   ]
