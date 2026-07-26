@@ -95,9 +95,8 @@ class _ScanScreenState extends State<ScanScreen> {
 				})
 				..amount.onChange.listen((event) => amount = event.neu);
 			},
-			builder: (context, model, child) => InkWell(
-				highlightColor: Colors.transparent,
-				splashColor: Colors.transparent,
+			builder: (context, model, child) => GestureDetector(
+				behavior: HitTestBehavior.opaque,
 				onTap: () { FocusScope.of(context).unfocus(); },
 				child: Container(
 					height: MediaQuery.of(context).size.height * 0.85,

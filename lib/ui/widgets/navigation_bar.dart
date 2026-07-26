@@ -19,9 +19,13 @@ class DefaultNavBar extends StatelessWidget {
 
 	@override
 	Widget build(BuildContext context) {
+		// Edge-to-edge: respeitar o inset real do sistema (gesto ~24-34px,
+		// 3 botões ~48px) em vez de um valor fixo, para a pill não sobrepor
+		// a barra de navegação em nenhum device.
+		final bottomInset = MediaQuery.viewPaddingOf(context).bottom;
 		return Container(
 			color: Colors.transparent,
-			padding: const EdgeInsets.fromLTRB(14, 8, 14, 28),
+			padding: EdgeInsets.fromLTRB(14, 8, 14, bottomInset > 0 ? bottomInset + 4 : 20),
 			child: Container(
 				decoration: BoxDecoration(
 					color: kSurfaceColor,

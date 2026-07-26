@@ -30,9 +30,8 @@ class _ListAddItemState extends State<ListAddItem> {
 
 		void dismiss() => Navigator.pop(context);
 
-		return InkWell(
-			highlightColor: Colors.transparent,
-			splashColor: Colors.transparent,
+		return GestureDetector(
+			behavior: HitTestBehavior.opaque,
 			onTap: () { FocusScope.of(context).unfocus(); },
 			child: Container(
 				height: MediaQuery.sizeOf(context).height * 0.7,

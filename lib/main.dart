@@ -7,6 +7,7 @@ import 'package:easy_cart/ui/history/history_page.dart';
 import 'package:easy_cart/ui/list/list_page.dart';
 import 'package:easy_cart/ui/onboarding/onboarding_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,18 @@ import 'package:easy_cart/utils/scanner.dart';
 
 void main() async {
 	WidgetsFlutterBinding.ensureInitialized();
+
+	// Edge-to-edge: opt-in explícito para o Android 15+ (API 35+), onde o
+	// modo é forçado. O engine atual do Flutter desenha as barras de sistema
+	// transparentes sem usar as APIs depreciadas (Window.setStatusBarColor /
+	// setNavigationBarColor).
+	SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+	SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+		statusBarColor: Colors.transparent,
+		systemNavigationBarColor: Colors.transparent,
+		systemNavigationBarDividerColor: Colors.transparent,
+	));
+
 	final prefs = await SharedPreferences.getInstance();
 	final onboardingDone = prefs.getBool('onboarding_done') ?? false;
 	runApp(MyApp(initialRoute: onboardingDone ? '/' : '/onboarding'));
@@ -68,7 +81,7 @@ class MyApp extends StatelessWidget {
 					'/history':     (context) => const HistoryPage(),
 					'/onboarding':  (context) => const OnboardingPage()
 				},
-				title: 'Carrinho Fácil',
+				title: 'PriceNow',
 				themeMode: ThemeMode.system,
 				theme: _buildTheme(Brightness.light),
 			)
