@@ -15,6 +15,7 @@ import 'package:easy_cart/ui/widgets/dialog.dart';
 import 'package:easy_cart/ui/cart/cart_item.dart';
 import 'package:easy_cart/ui/cart/cart_viewmodel.dart';
 import 'package:easy_cart/ui/widgets/navigation_bar.dart';
+import 'package:easy_cart/ui/widgets/ad_banner.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -106,10 +107,16 @@ class _CartPageState extends State<CartPage> {
               ),
             ),
 
-            // ── Tab bar pill flutuante inferior ────────────────────────
-            bottomNavigationBar: DefaultNavBar(
-              selectedIndex: 0,
-              onTap: (i) => _onNavTap(i, context),
+            // ── Banner fixo + tab bar pill flutuante inferior ──────────
+            bottomNavigationBar: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const AdBanner(),
+                DefaultNavBar(
+                  selectedIndex: 0,
+                  onTap: (i) => _onNavTap(i, context),
+                ),
+              ],
             ),
 
             body: Skeletonizer(
@@ -148,7 +155,7 @@ class _CartPageState extends State<CartPage> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 18),
                           child: ListView.separated(
-                            padding: const EdgeInsets.only(bottom: 120),
+                            padding: const EdgeInsets.only(bottom: 180),
                             itemBuilder:
                                 (context, index) => Skeleton.leaf(
                                   child: CartItem(

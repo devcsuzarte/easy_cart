@@ -1,4 +1,5 @@
 import 'package:easy_cart/core/constants.dart';
+import 'package:easy_cart/core/managers/admob_manager.dart';
 import 'package:easy_cart/core/managers/product_manager.dart';
 import 'package:easy_cart/core/managers/list_manager.dart';
 import 'package:easy_cart/ui/cart/cart_page.dart';
@@ -53,6 +54,9 @@ class MyApp extends StatelessWidget {
 				),
 				Provider(
 					create: (context) => ListManager()
+				),
+				Provider(
+					create: (context) => AdMobManager()..initialize()
 				)
 			],
 			child: MaterialApp(

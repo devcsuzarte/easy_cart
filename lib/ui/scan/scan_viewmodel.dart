@@ -1,3 +1,4 @@
+import 'package:easy_cart/core/managers/admob_manager.dart';
 import 'package:easy_cart/core/managers/product_manager.dart';
 import 'package:easy_cart/utils/price.dart';
 import 'package:easy_cart/utils/scanner.dart';
@@ -8,6 +9,7 @@ import 'package:stacked/stacked.dart';
 class ScanViewmodel extends FutureViewModel {
 
 	late ProductManager productManager;
+	late AdMobManager adMob;
 	final imagePicker = ImagePicker();
 	final bool isEditing;
 	final Product? product;
@@ -24,6 +26,7 @@ class ScanViewmodel extends FutureViewModel {
 
 	ScanViewmodel({
 		required this.productManager,
+		required this.adMob,
 		required this.isEditing,
 		this.product
 	});
@@ -82,6 +85,7 @@ class ScanViewmodel extends FutureViewModel {
 			runBusyFuture(
 				productManager.addProduct(product: newProduct)
 			).whenComplete((){
+				adMob.registerCartItemAdded();
 				setState(ScanState.addSucceeded);
 			});
 		} catch (e){

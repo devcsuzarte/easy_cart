@@ -4,6 +4,10 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<!-- AdMob App ID. TODO: substituir pelo App ID real do AdMob.
+	     (App ID de teste iOS: ca-app-pub-3940256099942544~1458002511) -->
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-5891158027265681~7601819382</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

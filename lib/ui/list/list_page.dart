@@ -11,6 +11,7 @@ import 'package:easy_cart/ui/widgets/container_default.dart';
 import 'package:easy_cart/ui/widgets/dialog.dart';
 import 'package:easy_cart/ui/widgets/empty.dart';
 import 'package:easy_cart/ui/widgets/navigation_bar.dart';
+import 'package:easy_cart/ui/widgets/ad_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -126,9 +127,15 @@ class _ListPageState extends State<ListPage> {
 						child: const Icon(Icons.add, size: 28),
 					),
 
-					bottomNavigationBar: DefaultNavBar(
-						selectedIndex: 1,
-						onTap: (i) => _onNavTap(i, context),
+					bottomNavigationBar: Column(
+						mainAxisSize: MainAxisSize.min,
+						children: [
+							const AdBanner(),
+							DefaultNavBar(
+								selectedIndex: 1,
+								onTap: (i) => _onNavTap(i, context),
+							),
+						],
 					),
 
 					body: SafeArea(
@@ -188,7 +195,7 @@ class _ListPageState extends State<ListPage> {
 											child: Padding(
 												padding: const EdgeInsets.symmetric(horizontal: 15),
 												child: ListView.separated(
-													padding: const EdgeInsets.only(bottom: 120),
+													padding: const EdgeInsets.only(bottom: 180),
 													itemBuilder: (context, index) => Skeleton.leaf(
 														child: ContainerDefault(
 															onHold: () {

@@ -7,6 +7,7 @@ import 'package:easy_cart/ui/history/history_item.dart';
 import 'package:easy_cart/ui/history/history_viewmodel.dart';
 import 'package:easy_cart/ui/widgets/empty.dart';
 import 'package:easy_cart/ui/widgets/navigation_bar.dart';
+import 'package:easy_cart/ui/widgets/ad_banner.dart';
 import 'package:easy_cart/utils/price.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -117,9 +118,15 @@ class _HistoryPageState extends State<HistoryPage> {
 						title: Text('Histórico', style: TypographyStyle.h1()),
 					),
 
-					bottomNavigationBar: DefaultNavBar(
-						selectedIndex: 2,
-						onTap: (i) => _onNavTap(i, context),
+					bottomNavigationBar: Column(
+						mainAxisSize: MainAxisSize.min,
+						children: [
+							const AdBanner(),
+							DefaultNavBar(
+								selectedIndex: 2,
+								onTap: (i) => _onNavTap(i, context),
+							),
+						],
 					),
 
 					body: (!model.isBusy && historyList.isNotEmpty)
@@ -128,7 +135,7 @@ class _HistoryPageState extends State<HistoryPage> {
 							child: SafeArea(
 								bottom: false,
 								child: ListView(
-									padding: const EdgeInsets.fromLTRB(18, 8, 18, 120),
+									padding: const EdgeInsets.fromLTRB(18, 8, 18, 180),
 									children: [
 										// ── Hero "gasto · mai 26" ─────────────────
 										Text(heroLabel, style: TypographyStyle.labelXs()),
