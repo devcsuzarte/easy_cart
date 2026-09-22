@@ -67,10 +67,7 @@ class _ListPageState extends State<ListPage> {
 		).showDefaultDialog();
 	}
 
-	void _onNavTap(int index, BuildContext context) {
-		if (index == 0) Navigator.pop(context);
-		if (index == 2) Navigator.pushNamed(context, '/history');
-	}
+	void _onNavTap(int index, BuildContext context) { navigateToTab(context, index, 1); }
 
 	void _showAddItem(BuildContext context, ListViewModel model) {
 		showModalBottomSheet(

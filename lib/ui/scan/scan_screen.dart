@@ -5,7 +5,7 @@ import 'package:easy_cart/core/style.dart';
 import 'package:easy_cart/core/managers/admob_manager.dart';
 import 'package:easy_cart/core/managers/product_manager.dart';
 import 'package:easy_cart/core/models/product.dart';
-import 'package:easy_cart/ui/scan/scan_viewmodel.dart';
+import 'package:easy_cart/ui/scan/scan_viewmodel.dart'; import 'package:easy_cart/ui/comparison/comparison_page.dart';
 import 'package:easy_cart/ui/widgets/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -108,6 +108,21 @@ class _ScanScreenState extends State<ScanScreen> {
 						child: Column(
 							crossAxisAlignment: CrossAxisAlignment.start,
 							children: [
+  if (!widget.isEditing)
+    TextButton.icon(
+      icon: const Icon(Icons.calculate_outlined),
+      label: const Text('Comparar custo-benefício'),
+      onPressed: () {
+        FocusScope.of(context).unfocus();
+        Navigator.of(context).push(MaterialPageRoute<void>(
+          builder: (_) => ComparisonPage(
+            initialName: textLabelController.text,
+            initialPrice: textPriceController.text,
+            fromSheet: true,
+          ),
+        ));
+      },
+    ),
 								Row(
 									crossAxisAlignment: CrossAxisAlignment.start,
 									children: [

@@ -54,10 +54,7 @@ class _CartPageState extends State<CartPage> {
     ).showDefaultDialog();
   }
 
-  void _onNavTap(int index, BuildContext context) {
-    if (index == 1) Navigator.pushNamed(context, '/list');
-    if (index == 2) Navigator.pushNamed(context, '/history');
-  }
+  void _onNavTap(int index, BuildContext context) { navigateToTab(context, index, 0); }
 
   @override
   Widget build(BuildContext context) {

@@ -63,10 +63,7 @@ class _HistoryPageState extends State<HistoryPage> {
 		return 'Você gastou R\$ ${diff.toStringAsFixed(0)} a menos que $prevMonthLabel. Continua assim.';
 	}
 
-	void _onNavTap(int index, BuildContext context) {
-		if (index == 0) {
-			Navigator.popUntil(context, ModalRoute.withName('/'));
-		} else if (index == 1) {
+	void _onNavTap(int index, BuildContext context) { navigateToTab(context, index, 2); } else if (index == 1) {
 			Navigator.popUntil(context, ModalRoute.withName('/'));
 			Navigator.pushNamed(context, '/list');
 		}

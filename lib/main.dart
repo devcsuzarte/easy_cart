@@ -2,7 +2,7 @@ import 'package:easy_cart/core/constants.dart';
 import 'package:easy_cart/core/managers/admob_manager.dart';
 import 'package:easy_cart/core/managers/product_manager.dart';
 import 'package:easy_cart/core/managers/list_manager.dart';
-import 'package:easy_cart/ui/cart/cart_page.dart';
+import 'package:easy_cart/ui/cart/cart_page.dart'; import 'package:easy_cart/ui/comparison/comparison_page.dart';
 import 'package:easy_cart/ui/history/history_page.dart';
 import 'package:easy_cart/ui/list/list_page.dart';
 import 'package:easy_cart/ui/onboarding/onboarding_page.dart';
@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
 			child: MaterialApp(
 				debugShowCheckedModeBanner: false,
 				initialRoute: initialRoute,
-				routes: {
+				routes: { '/compare': (context) => const ComparisonPage(),
 					'/':            (context) => const CartPage(),
 					'/list':        (context) => const ListPage(),
 					'/history':     (context) => const HistoryPage(),
